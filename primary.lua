@@ -361,7 +361,7 @@ SMODS.Joker {
     loc_txt = {
       name = 'Stereo Madness',
       text = {
-        "+{C:mult}#1#{} Mult for every Card",
+        "{C:mult}+#1#{} Mult for every Card",
         "{C:inactive}(Card must Score){}"
       }
     },
@@ -394,7 +394,7 @@ SMODS.Joker {
    loc_txt = {
      name = 'Back on Track',
      text = {
-       "+{C:chips}#1#{} Chips for every Face Card",
+       "{C:chips}+#1#{} Chips for every Face Card",
        "{C:inactive}(Card must Score){}"
      }
    },
@@ -411,13 +411,10 @@ SMODS.Joker {
    pos = { x = 1, y = 0 },
    cost = 5,
    calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play then
-			if context.other_card:is_face() then
-       return {
-          chips_mod = card.ability.extra.chips,
-           message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } }
-       }
-     end
+    if context.individual and context.cardarea == G.play then
+      if context.other_card:is_face() then
+        return {chips = card.ability.extra.chips}
+      end
     end
   end
  }
@@ -567,8 +564,8 @@ SMODS.Joker {
   loc_txt = {
     name = 'Jumper',
     text = {
-      "{C:mult}No Effect.{}",
-      " "
+      "When a card is scored this joker gives {C:mult}+#1#{} Mult",
+      "{C:inactive}amount of mult given is increased by the amount of cards in play",
     }
   },
   loc_vars = function(self, info_queue, card)
@@ -584,11 +581,14 @@ SMODS.Joker {
   pos = { x = 1, y = 1 },
   cost = 10,
   calculate = function(self, card, context)
-    if context.joker_main then
-      return {
-        -- mult_mod = card.ability.extra.mult,
-        -- message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
-      }
+    if context.cardarea == G.play and context.individual then
+      for i = 1, #G.play.cards do
+        if context.other_card == G.play.cards[i] then
+          return {
+            mult = card.ability.extra.mult * i,
+          }
+        end
+      end
     end
   end
  }
