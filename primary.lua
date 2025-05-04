@@ -1101,6 +1101,32 @@ config = { mult = 5, chips = 20, money = 1, x_mult = 1.5  },
 		end
 	end,
 }
+if next(SMODS.find_mod("MoreFluff")) then
+SMODS.Consumable {
+  key = 'color',
+  set = 'editor',
+  atlas = 'cubeConsumable',
+  pos = { x = 2, y = 2 },
+  cost = 5,
+  loc_vars = function(self, info_queue, card)
+    return { vars = { (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  end,
+  config = {
+    extra = {
+      odds = 4
+    }
+  },
+  loc_txt = {
+		name = 'Color Trigger',
+		text = {
+			'{C:mult} PLACEHOLDER TEXTURE {}',
+			'{C:inactive} No Effect. {}',
+      "{C:inactive}Intended Effect: {}Create {C:mult}Red{},{C:green} Green{} and{C:chips} Blue{} Colour Cards",
+      "{C:green}#1# in #2#{} to also include White"
+		},
+	}
+}
+end
 
  --[[ SMODS.Atlas {
   key = "seal_atlas",
