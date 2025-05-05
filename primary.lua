@@ -571,7 +571,7 @@ SMODS.Joker {
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.mult } }
   end,
-  config = { extra = { mult = 1 } },
+  config = { extra = { mult = 8 } },
   rarity = 'gj_hrdr',
   unlocked = true,
   mainlevel = true,
