@@ -462,7 +462,7 @@ SMODS.Joker {
   loc_vars = function(self, info_queue, card)
       return { vars = { card.ability.extra.mult_mod, card.ability.extra.mult } }
   end,
-  config = { extra = { mult = 0, mult_mod = 2 } },
+  config = { extra = { mult = 0, mult_mod = 8 } },
   rarity = 'gj_norm',
   unlocked = true,
   discovered = true,
