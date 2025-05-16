@@ -591,14 +591,21 @@ SMODS.Joker {
   loc_txt = {
     name = 'Time Machine',
     text = {
-      "{C:mult}No Effect.{}",
-      " "
+      "The first time you discard a hand each round,",
+      "reduce its {C:attention}level by 1{} (min 1) and gain",
+      "{C:mult}+2{} Mult for each time that hand was played.",
+      "{C:inactive}(Current bonus: {C:mult}+#1#{})"
     }
   },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.mult } }
+    return { vars = { card.ability.extra.mult or 0 } }
   end,
-  config = { extra = { mult = 1 } },
+  config = {
+    extra = {
+      mult = 0,
+      triggered = false -- for tracking per-round trigger
+    }
+  },
   rarity = 'gj_hrdr',
   unlocked = true,
   mainlevel = true,
@@ -608,14 +615,40 @@ SMODS.Joker {
   pos = { x = 2, y = 1 },
   cost = 12,
   calculate = function(self, card, context)
+    if context.setting_blind then
+      card.ability.extra.triggered = false -- reset at start of round
+    end
+
+    if context.discard and not card.ability.extra.triggered then
+      local hand_type = G.GAME.last_hand_hand_type
+      if hand_type and G.GAME.hands[hand_type] then
+        local hand_info = G.GAME.hands[hand_type]
+        -- Reduce level by 1, but not below 1
+        hand_info.level = math.max(1, (hand_info.level or 1) - 1)
+
+        -- Add to cumulative mult
+        local times_played = hand_info.times_played or 0
+        local mult_gain = times_played * 2.9
+        card.ability.extra.mult = (card.ability.extra.mult or 0) + mult_gain
+
+        -- Prevent multiple triggers this round
+        card.ability.extra.triggered = true
+
+        return {
+          mult_mod = 0,
+          message = localize{ type = 'variable', key = 'a_mult', vars = { mult_gain } }
+        }
+      end
+    end
+
     if context.joker_main then
       return {
-        -- mult_mod = card.ability.extra.mult,
-        -- message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
+        mult_mod = card.ability.extra.mult,
+        message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
       }
     end
   end
- }
+}
  SMODS.Joker {
   key = 'dash',
   loc_txt = {
