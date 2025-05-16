@@ -296,7 +296,6 @@ SMODS.Rarity {
   pools = {
     ["Joker"] = true --uses self.default_rate when polled
   },
-  default_weight = 1,
   badge_colour = HEX('1114aa'),
 }
 SMODS.Rarity {
@@ -307,7 +306,6 @@ SMODS.Rarity {
   pools = {
     ["Joker"] = true --uses self.default_rate when polled
   },
-  default_weight = 1,
   badge_colour = HEX('00aa00'),
 }
 SMODS.Rarity {
@@ -318,7 +316,6 @@ SMODS.Rarity {
   pools = {
     ["Joker"] = true --uses self.default_rate when polled
   },
-  default_weight = 1,
   badge_colour = HEX('aaaa00'),
 }
 SMODS.Rarity {
@@ -329,7 +326,6 @@ SMODS.Rarity {
   pools = {
     ["Joker"] = true --uses self.default_rate when polled
   },
-  default_weight = 1,
   badge_colour = HEX('aa0000'),
 }
 SMODS.Rarity {
@@ -340,7 +336,6 @@ SMODS.Rarity {
   pools = {
     ["Joker"] = true --uses self.default_rate when polled
   },
-  default_weight = 1,
   badge_colour = HEX('ff00ff'),
 }
 SMODS.Rarity {
@@ -351,7 +346,6 @@ SMODS.Rarity {
   pools = {
     ["Joker"] = true --uses self.default_rate when polled
   },
-  default_weight = 1,
   badge_colour = HEX('ff0000'),
 }
 
