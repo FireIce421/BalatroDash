@@ -11,6 +11,37 @@
 --- DEPENDENCIES: [Talisman>=2.0.0-beta8, Steamodded>=1.0.0~ALPHA-1216c]
 --- LOADER_VERSION_GEQ: 1.0.0
 
+
+-- MANUAL LOCALPOOLFIX IMPLEMENTATION
+function SMODS.process_loc_text(ref_table, ref_value, loc_txt, key)
+  if ref_table then
+    local target = (type(loc_txt) == 'table') and
+    ((G.SETTINGS.real_language and loc_txt[G.SETTINGS.real_language]) or loc_txt[G.SETTINGS.language] or loc_txt['default'] or loc_txt['en-us']) or loc_txt
+    if key and (type(target) == 'table') then target = target[key] end
+    if not (type(target) == 'string' or target and next(target)) then return end
+    ref_table[ref_value] = target
+  end
+end
+
+function SMODS.insert_pool(pool, center, replace)
+    if pool and center then
+      if replace == nil then replace = center.taken_ownership end
+      if replace then
+          for k, v in ipairs(pool) do
+              if v.key == center.key then
+                  pool[k] = center
+              end
+          end
+      else
+          local prev_order = (pool[#pool] and pool[#pool].order) or 0
+          if prev_order ~= nil then 
+              center.order = prev_order + 1
+          end
+          table.insert(pool, center)
+      end
+    end
+end
+
 SMODS.Atlas {
     -- Key for code to find it with
     key = "jokerList",
