@@ -195,6 +195,14 @@ friend = {
   col = HEX('ff00ff'),
   tcol = G.C.WHITE
 },
+broken = {
+  text = {
+    "WARNING",
+    "BROKEN FUNCTIONALITY"
+  },
+  col = HEX('ff0000'),
+  tcol = G.C.WHITE
+},
 }
 local function calculate_scalefactor(text)
 local size = 0.9
@@ -339,7 +347,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('1114aa'),
-default_weight = 0.3,
+default_weight = 0.2,
 }
 SMODS.Rarity {
 key = "norm",
@@ -350,7 +358,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('00aa00'),
-default_weight = 0.25,
+default_weight = 0.15,
 }
 SMODS.Rarity {
 key = "hr",
@@ -372,7 +380,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('aa0000'),
-default_weight = 0.125,
+default_weight = 0.075,
 }
 SMODS.Rarity {
 key = "ins",
@@ -383,7 +391,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('ff00ff'),
-default_weight = 0.1,
+default_weight = 0.025,
 }
 SMODS.Rarity {
 key = "hrdm",
@@ -394,7 +402,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('ff0000'),
-default_weight = 0.05,
+default_weight = 0.0625,
 }
 SMODS.Rarity {
 key = "uniq",
@@ -477,11 +485,11 @@ key = 'polar',
 loc_txt = {
  name = 'Polargeist',
  text = {
-   "Retrigger each non-Face Card Once.",
+   "Retrigger each non-Face Card {C:mult}ONCE{}.",
    "{C:inactive}Wait, isn't that just reverse Sock and Busk- CARD MUST SCORE.{}"
  }
 },
-config = { extra = { repetitions = 1 } },
+config = { extra = { repetitions == 1 } },
 rarity = 'gj_norm',
 unlocked = true,
 mainlevel = true,
@@ -494,7 +502,7 @@ calculate = function(self, card, context)
 if context.cardarea == G.play and context.repetition and not context.repetition_only then
   if not context.other_card:is_face() then
     return {
-      message = 'REPEAT',
+      message = 'Attempt 2',
       repetitions = card.ability.extra.repetitions,
       card = context.other_card
     }
@@ -515,7 +523,7 @@ loc_txt = {
 loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.mult_mod, card.ability.extra.mult } }
 end,
-config = { extra = { mult = 0, mult_mod = 8 } },
+config = { extra = { mult = 0, mult_mod = 20 } }, -- how many times do i have to buff dry out for it to be viable
 rarity = 'gj_norm',
 unlocked = true,
 discovered = true,
@@ -618,7 +626,7 @@ loc_txt = {
   name = 'Jumper',
   text = {
     "When a card is scored this joker gives {C:mult}+#1#{} Mult",
-    "{C:inactive}amount of mult given is increased by the amount of cards in play",
+    "{C:inactive}Amount of given mult scales with each card. (8 -> 16 and so on...)",
   }
 },
 loc_vars = function(self, info_queue, card)
@@ -669,6 +677,7 @@ rarity = 'gj_hrdr',
 unlocked = true,
 mainlevel = true,
 secondrelease = true,
+broken = 1,
 blueprint_compat = true,
 atlas = 'jokerList',
 pos = { x = 2, y = 1 },
@@ -716,7 +725,8 @@ loc_txt = {
     "{C:green}#2# in #3#{} chance to retrigger each {C:attention}6{} 6 times.",
     "{C:inactive}So, I've heard you like the number {C:green}6{C:inactive}.{}",
     " ",
-    "{C:inactive}Code inspired from: {C:chips}Jen's Almanac{}"
+    "{C:inactive}Code inspired from: {C:chips}Jen's Almanac{}",
+    "{s:0.75,C:chips}The Sigil{s:0.75} is gone, but the{s:0.75,C:green} memory{s:0.75} remains.{}"
   }
 },
 loc_vars = function(self, info_queue, card)
@@ -747,62 +757,6 @@ calculate = function(self, card, context)
         end
       end
     end
-  end
-end
-}
-SMODS.Joker {
-key = 'duplabel',
-loc_txt = {
-  name = "duplicate label 'continue'",
-  text = {
-    "{C:mult}No Effect.{}",
-    "{C:inactive}ALMANAC IS CRASHING: DUPLICATE LABEL 'CONTINUE'{}"
-  }
-},
-loc_vars = function(self, info_queue, card)
-  return { vars = { card.ability.extra.mult } }
-end,
-config = { extra = { mult = 1 } },
-rarity = 1,
-unlocked = true,
-blueprint_compat = true,
-atlas = 'jokerList',
-pos = { x = 0, y = 2 },
-cost = 20,
-calculate = function(self, card, context)
-  if context.joker_main then
-    return {
-      -- mult_mod = card.ability.extra.mult,
-      -- message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
-    }
-  end
-end
-}
-SMODS.Joker {
-key = 'gullible',
-loc_txt = {
-  name = "Gullible",
-  text = {
-    "{C:mult}No Effect.{}",
-    "{C:inactive}Hey, it says 'gullible' on the ceiling!{}"
-  }
-},
-loc_vars = function(self, info_queue, card)
-  return { vars = { card.ability.extra.mult } }
-end,
-config = { extra = { mult = 1 } },
-rarity = 3,
-unlocked = true,
-blueprint_compat = true,
-atlas = 'jokerList',
-pos = { x = 1, y = 2 },
-cost = 16,
-calculate = function(self, card, context)
-  if context.joker_main then
-    return {
-      -- mult_mod = card.ability.extra.mult,
-      -- message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
-    }
   end
 end
 }
@@ -878,22 +832,58 @@ end
   end
 end
 }
+if (SMODS.find_mod("cry")) then
+  SMODS.Joker {
+key = 'fireicerealjokerlol',
+loc_txt = {
+  name = "FireIce",
+  text = {
+    "For every used {X:code}Code{} Card, add {X:chips,C:white}^#2#{} Chips.",
+    "{C:inactive}Currently: {X:chips,C:white}^#1#{}",
+    " ",
+    "You need something?",
+    "OC by: FireIce_421"
+  }
+},
+loc_vars = function(self, info_queue, card)
+  return { vars = { card.ability.extra.e_chips, card.ability.extra.e_chipsGain } }
+end,
+config = { extra = { e_chips = 1, e_chipsGain = 1 } },
+rarity = 'gj_uniq',
+unlocked = true,
+blueprint_compat = true,
+atlas = 'cubeConsumable',
+pos = { x = 5, y = 0 },
+cost = 26,
+thecaticon = 1,
+calculate = function(self, card, context)
+  if context.using_consumeable and context.consumeable.ability.set == "Code" then
+  card.ability.extra.e_chips = card.ability.extra.e_chips + card.ability.extra.e_chipsGain
+  end
+ if context.joker_main then
+  return {
+    e_chips = card.ability.extra.e_chips
+ }
+  end
+end
+}
+end
 SMODS.ConsumableType {
 key = 'cube',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('aa3311'),
+secondary_colour = HEX('00ff00'),
 loc_txt = {
   collection = 'Cubes',
   name = 'Cube'
 },
-shop_rate = 2
+shop_rate = 0.1
 }
 --[[ SMODS.ConsumableType {
 key = 'ship',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('f4b6cc'),
+secondary_colour = HEX('ff00ff'),
 loc_txt = {
   collection = 'Ships',
   name = 'Ship'
@@ -904,18 +894,18 @@ SMODS.ConsumableType {
 key = 'ball',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('a576cb'),
+secondary_colour = HEX('ff0000'),
 loc_txt = {
   collection = 'Balls',
   name = 'Ball'
 },
-shop_rate = 2
+shop_rate = 0.1
 } --[[
 SMODS.ConsumableType {
 key = 'ufo',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('145afd'),
+secondary_colour = HEX('ffaa00'),
 loc_txt = {
   collection = 'UFOs',
   name = 'UFO'
@@ -926,7 +916,7 @@ SMODS.ConsumableType {
 key = 'wave',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('456dcb'),
+secondary_colour = HEX('00ffff'),
 loc_txt = {
   collection = 'Waves',
   name = 'Wave'
@@ -937,7 +927,7 @@ SMODS.ConsumableType {
 key = 'robot',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('768aaa'),
+secondary_colour = HEX('ffffff'),
 loc_txt = {
   collection = 'Robots',
   name = 'Robot'
@@ -948,7 +938,7 @@ SMODS.ConsumableType {
 key = 'spider',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('acbfde'),
+secondary_colour = HEX('4500ff'),
 loc_txt = {
   collection = 'Spiders',
   name = 'Spider'
@@ -959,7 +949,7 @@ SMODS.ConsumableType {
 key = 'swing',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('123abc'),
+secondary_colour = HEX('ffff00'),
 loc_txt = {
   collection = 'Swings',
   name = 'Swing'
@@ -970,7 +960,7 @@ SMODS.ConsumableType {
 key = 'jetpack',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('654812'),
+secondary_colour = HEX('660066'),
 loc_txt = {
   collection = 'Jetpacks',
   name = 'Jetpack'
@@ -978,7 +968,7 @@ loc_txt = {
 shop_rate = 2
 }
 SMODS.ConsumableType {
-key = 'gj_edit',
+key = 'edit',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
 secondary_colour = HEX('aaaaff'),
@@ -1310,7 +1300,6 @@ loc_txt = {
 }
 }
 end
-if next(SMODS.find_mod("jen")) then
 SMODS.Consumable {
 key = 'shader',
 set = 'editor',
@@ -1328,8 +1317,8 @@ config = {
 loc_txt = {
   name = 'Shader Trigger',
   text = {
-    'Applies a random POLTERWORX edition to one random playing card.',
-    "All edition are weighted equally and includes Exotic+ Editions."
+    'Applies a random edition to one random playing card.',
+    "All editions are weighted equally."
   },
 }
 }
