@@ -1322,7 +1322,7 @@ loc_txt = {
   },
 }
 }
-end
+
 
 --[[ SMODS.Atlas {
 key = "seal_atlas",
