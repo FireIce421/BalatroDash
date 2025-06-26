@@ -499,17 +499,16 @@ atlas = 'jokerList',
 pos = { x = 2, y = 0 },
 cost = 7,
 calculate = function(self, card, context)
-if context.cardarea == G.play and context.repetition and not context.repetition_only then
-  if not context.other_card:is_face() then
-    return {
-      message = 'Attempt 2',
-      repetitions = card.ability.extra.repetitions,
-      repetitions = 1,
-      card = context.other_card
-    }
-  end
-end
-end
+		if context.cardarea == G.play and context.repetition and not context.repetition_only then
+			if not context.other_card:is_face() then
+				return {
+					message = 'Attempt 2',
+					repetitions = card.ability.extra.repetitions,
+					card = context.other_card
+				}
+			end
+		end
+	end
 }
 SMODS.Joker {
 key = 'dryout',
