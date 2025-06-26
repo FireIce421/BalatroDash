@@ -489,7 +489,7 @@ loc_txt = {
    "{C:inactive}Wait, isn't that just reverse Sock and Busk- CARD MUST SCORE.{}"
  }
 },
-config = { extra = { repetitions == 1 } },
+config = { extra = { repetitions = 1 } },
 rarity = 'gj_norm',
 unlocked = true,
 mainlevel = true,
@@ -504,6 +504,7 @@ if context.cardarea == G.play and context.repetition and not context.repetition_
     return {
       message = 'Attempt 2',
       repetitions = card.ability.extra.repetitions,
+      repetitions = 1,
       card = context.other_card
     }
   end
