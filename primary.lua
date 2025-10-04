@@ -1,18 +1,18 @@
 --- STEAMODDED HEADER
 
 --- MOD_NAME: Balatro Dash
---- MOD_ID: geometrydash
+--- MOD_ID: bdash
 --- MOD_AUTHOR: [FireIce]
---- MOD_DESCRIPTION: (Insanely Heavy WIP) Adds a whole lot of things based on Geometry Dash Levels and Icons!
+--- MOD_DESCRIPTION: (Insanely Heavy WIP) Adds a whole lot of things based on Geometry Dash Levels and Icons!Art Credits: gudusername_53951   0.0.1a - added a whole lotta things, i need a break
 --- PRIORITY: 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
 --- BADGE_COLOR: 00cc00
 --- PREFIX: gj
---- VERSION: 0.0.0a
+--- VERSION: 0.0.1a
 --- DEPENDENCIES: [Talisman>=2.0.0-beta8, Steamodded>=1.0.0~ALPHA-1216c]
 --- LOADER_VERSION_GEQ: 1.0.0
 
 
--- MANUAL LOCALPOOLFIX IMPLEMENTATION
+-- MANUAL LOCALPOOLFIX IMPLEMENTATION, THERES NO WORKAROUND HERE IM SORRY
 if not (SMODS.find_mod("jen_localpoolfix")) then
 function SMODS.process_loc_text(ref_table, ref_value, loc_txt, key)
   if ref_table then
@@ -64,6 +64,28 @@ SMODS.Atlas {
   -- Height of each sprite in 1x size
   py = 95
 }
+SMODS.Atlas {
+  -- Key for code to find it with
+  key = "uniq",
+  -- The name of the file, for the code to pull the atlas from
+  path = "uniques.png",
+  -- Width of each sprite in 1x size
+  px = 71,
+  -- Height of each sprite in 1x size
+  py = 95
+}
+SMODS.Atlas {
+  -- Key for code to find it with
+  key = "balatrofinalboss",
+  -- The name of the file, for the code to pull the atlas from
+  path = "ante39.png",
+  -- Width of each sprite in 1x size
+  px = 34,
+  -- Height of each sprite in 1x size
+  py = 34,
+  atlas_table = 'ANIMATION_ATLAS',
+  frames = 21
+}
 
 local gj_modifierbadges = {
 mainlevel = {
@@ -105,7 +127,7 @@ latestrelease = {
     'Update Released: 2.2',
     'Release Date: December 23rd 2023'
   },
-  col = HEX('525252'),
+  col = HEX('6666ff'),
   tcol = G.C.WHITE
 },
 thecaticon = {
@@ -201,6 +223,21 @@ broken = {
     "BROKEN FUNCTIONALITY"
   },
   col = HEX('ff0000'),
+  tcol = G.C.WHITE
+},
+unreleased = {
+  text = {
+    "UNRELEASED LEVEL"
+  },
+  col = HEX('ff0000'),
+  tcol = G.C.WHITE
+},
+onepointtwo = {
+  text = {
+    'Update Released: 1.2',
+    'Release Date: October 17th 2013'
+  },
+  col = HEX('6666ff'),
   tcol = G.C.WHITE
 },
 }
@@ -337,7 +374,17 @@ end
 end
 -- end
 
-
+SMODS.Rarity {
+key = "na",
+loc_txt = {
+  name = 'NA', -- used on rarity badge
+},
+pools = {
+  ["Joker"] = true --uses self.default_rate when polled
+},
+badge_colour = HEX('999999'),
+default_weight = 0.0075,
+}
 SMODS.Rarity {
 key = "ez",
 loc_txt = {
@@ -347,7 +394,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('1114aa'),
-default_weight = 0.2,
+default_weight = 0.075,
 }
 SMODS.Rarity {
 key = "norm",
@@ -358,7 +405,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('00aa00'),
-default_weight = 0.15,
+default_weight = 0.125,
 }
 SMODS.Rarity {
 key = "hr",
@@ -369,7 +416,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('aaaa00'),
-default_weight = 0.15,
+default_weight = 0.0075,
 }
 SMODS.Rarity {
 key = "hrdr",
@@ -380,7 +427,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('aa0000'),
-default_weight = 0.075,
+default_weight = 0.05,
 }
 SMODS.Rarity {
 key = "ins",
@@ -391,7 +438,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('ff00ff'),
-default_weight = 0.025,
+default_weight = 0.01,
 }
 SMODS.Rarity {
 key = "hrdm",
@@ -402,7 +449,7 @@ pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
 badge_colour = HEX('ff0000'),
-default_weight = 0.0625,
+default_weight = 0.0075,
 }
 SMODS.Rarity {
 key = "uniq",
@@ -412,8 +459,19 @@ loc_txt = {
 pools = {
   ["Joker"] = true --uses self.default_rate when polled
 },
-default_weight = 0.01,
+default_weight = 0.005,
 badge_colour = HEX('000000'),
+}
+SMODS.Rarity {
+key = "detri",
+loc_txt = {
+  name = 'Detriment', -- used on rarity badge
+},
+pools = {
+  ["Joker"] = true --uses self.default_rate when polled
+},
+default_weight = 0,
+badge_colour = HEX('ff0000'),
 }
 
 SMODS.Joker {
@@ -485,10 +543,13 @@ key = 'polar',
 loc_txt = {
  name = 'Polargeist',
  text = {
-   "Retrigger each non-Face Card {C:mult}ONCE{}.",
+   "Retrigger each non-Face Card once.",
    "{C:inactive}Wait, isn't that just reverse Sock and Busk- CARD MUST SCORE.{}"
  }
 },
+ loc_vars = function(self, info_queue, card)
+   return { vars = { card.ability.extra.repetitions } }
+ end,
 config = { extra = { repetitions = 1 } },
 rarity = 'gj_norm',
 unlocked = true,
@@ -517,13 +578,14 @@ loc_txt = {
   text = {
     'For each round without selling anything, gain {C:mult}+#1#{} Mult, otherwise {C:attention}reset{}',
     '{C:inactive}Activates an additional time per scored card',
-    '{C:inactive}(Currently: {C:mult}+#2#{}{C:inactive}){}'
+    '{C:inactive}(Currently: {C:mult}+#2#{}{C:inactive}){}',
+    '{C:inactive}please let me rest i dont want to buff this more'
     }
 },
 loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.mult_mod, card.ability.extra.mult } }
 end,
-config = { extra = { mult = 0, mult_mod = 20 } }, -- how many times do i have to buff dry out for it to be viable
+config = { extra = { mult = 0, mult_mod = 20 } },
 rarity = 'gj_norm',
 unlocked = true,
 discovered = true,
@@ -621,12 +683,38 @@ calculate = function(self, card, context)
 end
 }
 SMODS.Joker {
+key = 'ultimate',
+loc_txt = {
+  name = 'Ultimate Destruction',
+  text = {
+      "{C:mult}No Implemented Effect Yet.",
+      "{C:inactive}Check back later, it could be implemented anytime!{}"
+  }
+},
+loc_vars = function(self, info_queue, card)
+  return { vars = { card.ability.extra.mult } }
+end,
+config = { extra = { mult = 1 } },
+rarity = 'gj_na',
+unlocked = true,
+mainlevel = true,
+unreleased = true,
+blueprint_compat = true,
+atlas = 'jokerList',
+pos = { x = 1, y = 1 },
+cost = 10,
+calculate = function(self, card, context)
+
+end
+}
+SMODS.Joker {
 key = 'jmp',
 loc_txt = {
   name = 'Jumper',
   text = {
-    "When a card is scored this joker gives {C:mult}+#1#{} Mult",
-    "{C:inactive}Amount of given mult scales with each card. (8 -> 16 and so on...)",
+    "When a card is scored this Joker gives {C:mult}+#1#{} Mult",
+    "{C:inactive}Amount of given Mult scales with each played card (8 -> 16 and so on...)",
+    "{C:inactive,s:0.75}Wait, are you telling me the card DOESN'T have to score?{}"
   }
 },
 loc_vars = function(self, info_queue, card)
@@ -676,8 +764,8 @@ config = {
 rarity = 'gj_hrdr',
 unlocked = true,
 mainlevel = true,
-secondrelease = true,
 broken = 1,
+secondrelease = true,
 blueprint_compat = true,
 atlas = 'jokerList',
 pos = { x = 2, y = 1 },
@@ -718,6 +806,31 @@ calculate = function(self, card, context)
 end
 }
 SMODS.Joker {
+  key = 'cycl',
+  loc_txt = {
+    name = 'Cycles',
+    text = {
+      "{C:mult}No Implemented Effect Yet.",
+      "{C:inactive}Check back later, it could be implemented anytime!{}"
+    }
+  },
+loc_vars = function(self, info_queue, card)
+  return { vars = { card.ability.extra.mult } }
+end,
+config = { extra = { mult = 1 } },
+rarity = 'gj_hrdr',
+unlocked = true,
+mainlevel = true,
+blueprint_compat = true,
+atlas = 'jokerList',
+pos = { x = 1, y = 1 },
+cost = 12,
+onepointtwo = 1,
+calculate = function(self, card, context)
+
+end
+}
+SMODS.Joker {
 key = 'dash',
 loc_txt = {
   name = 'Dash',
@@ -725,8 +838,8 @@ loc_txt = {
     "{C:green}#2# in #3#{} chance to retrigger each {C:attention}6{} 6 times.",
     "{C:inactive}So, I've heard you like the number {C:green}6{C:inactive}.{}",
     " ",
-    "{C:inactive}Code inspired from: {C:chips}Jen's Almanac{}",
-    "{s:0.75,C:chips}The Sigil{s:0.75} is gone, but the{s:0.75,C:green} memory{s:0.75} remains.{}"
+    "{C:inactive}Code inspired from: {C:chips}POLTERWORX{}",
+    "{s:0.5,C:chips}The Sigil{s:0.5} is gone, but the{s:0.5,C:green} memory{s:0.5} remains.{}"
   }
 },
 loc_vars = function(self, info_queue, card)
@@ -763,23 +876,26 @@ end
 SMODS.Joker {
 key = 'pr',
 loc_txt = {
-  name = "Pry Stellar!",
+  name = "{s:0.75}(Asteria){} Pry Stellar!",
   text = {
-    "For every used {X:planet,C:DARK}Planet{} card, add {X:DARK,C:mult}^#2#{} Mult.",
-    "Currently: {X:DARK,C:mult}^#1#{}",
+    "When a {C:planet}Planet{} card is used, gain {X:mult,C:white}^#2#{} Mult",
+    "{C:inactive}(Currently {X:mult,C:white}^#1#{C:inactive} Mult)",
     "{C:inactive}Oh,,,, hai!!! heiii!!!! hii!!!!!!!{}",
     "{C:inactive}OC by: KITTIIZZ_X3 {}",
+    "{C:inactive,s:0.8}Face Art by: {X:dark_edition,C:white,s:0.8}gudusername_53951",
+    "{C:inactive,s:0.8}Background by: {X:purple,C:white,s:0.8}FireIce",
   }
 },
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_mult, card.ability.extra.Emult_mod } }
 end,
-config = { extra = { e_mult = 1, Emult_mod = 1 } },
+config = { extra = { e_mult = 1, Emult_mod = 0.25 } },
 rarity = 'gj_uniq',
 unlocked = true,
 blueprint_compat = true,
-atlas = 'jokerList',
-pos = { x = 2, y = 1 },
+atlas = 'uniq',
+pos = { x = 0, y = 0 },
+soul_pos = { x = 1, y = 0 },
 cost = 26,
 friend = 1,
 calculate = function(self, card, context)
@@ -799,22 +915,25 @@ loc_txt = {
   name = "DlovanSlayer",
   text = {
     "For every used {X:spectral,C:white}Spectral{} or {X:tarot,C:white}Tarot{} card, add {X:mult,C:white}x#3#{} Mult and {X:chips,C:white}x#4#{} Chips",
-    "Currently: {X:mult,C:white}x#1#{} and {X:chips,C:white}x#2#{}",
     "{X:chips,C:white}XChips{} will be applied {C:mult}first{}, then {X:mult,C:white}XMult{}",
     "{C:inactive}Hello there!{}",
     "{C:inactive}OC by: DlovanSl {}",
-    "Note: {X:spectral,C:white}Spectrals{} will add {X:mult,C:white}XMult{} and {X:tarot,C:white}Tarots{} will add {X:chips,C:white}XChips{}",
+    "{s:0.5}Note: {X:spectral,C:white}Spectrals{} will add {X:mult,C:white}XMult{} and {X:tarot,C:white}Tarots{} will add {X:chips,C:white}XChips{}{}",
+    "",
+    "As a drawback, {X:chips,C:white}XChips{} and {X:mult,C:white}XMult{} will be {X:dark,C:white}divided{} by #5#.",
+    "Increase the {X:dark,C:white}division{} denominator by #6# at the end of each round", -- if you dont solve this, it will be your downfall
+    "Currently: {X:mult,C:white}x#1#{}, {X:chips,C:white}x#2#{},{X:dark,C:white}/#5#(+#6#){}",
   }
 },
 loc_vars = function(self, info_queue, card)
-  return { vars = { card.ability.extra.x_mult, card.ability.extra.x_chips, card.ability.extra.x_multGain, card.ability.extra.x_chipsGain } }
+  return { vars = { card.ability.extra.x_mult, card.ability.extra.x_chips, card.ability.extra.x_multGain, card.ability.extra.x_chipsGain, card.ability.extra.divExp, card.ability.extra.divGain } }
 end,
-config = { extra = { x_mult = 1, x_chips = 1, x_multGain = 1, x_chipsGain = 0.5 } },
+config = { extra = { x_mult = 1, x_chips = 1, x_multGain = 1, x_chipsGain = 0.5, divExp = 1, divGain = 0.05 } },
 rarity = 'gj_uniq',
 unlocked = true,
 blueprint_compat = true,
-atlas = 'jokerList',
-pos = { x = 2, y = 1 },
+atlas = 'uniq',
+pos = { x = 0, y = 1 },
 cost = 26,
 friend = 1,
 calculate = function(self, card, context)
@@ -826,23 +945,23 @@ end
   end
  if context.joker_main then
   return {
-    x_mult = card.ability.extra.x_mult,
-    x_chips = card.ability.extra.x_chips
+    x_mult = card.ability.extra.x_mult / card.ability.extra.divExp,
+    x_chips = card.ability.extra.x_chips / card.ability.extra.divExp
  }
   end
+if context.end_of_round and context.cardarea == G.jokers then
+  card.ability.extra.divExp = card.ability.extra.divExp + card.ability.extra.divGain
+end
 end
 }
-if (SMODS.find_mod("cry")) then
   SMODS.Joker {
 key = 'fireicerealjokerlol',
 loc_txt = {
   name = "FireIce",
   text = {
-    "For every used {X:code}Code{} Card, add {X:chips,C:white}^#2#{} Chips.",
-    "{C:inactive}Currently: {X:chips,C:white}^#1#{}",
-    " ",
-    "You need something?",
-    "OC by: FireIce_421"
+    "{C:mult}No Effect.{}",
+    "{C:inactive}Released to facilitate Boss Blind.",
+    "{C:purple,E:1,s:0.6}Something bad will happen on (or past) {C:dark_edition,s:0.6}Ante 39{}"
   }
 },
 loc_vars = function(self, info_queue, card)
@@ -852,60 +971,84 @@ config = { extra = { e_chips = 1, e_chipsGain = 1 } },
 rarity = 'gj_uniq',
 unlocked = true,
 blueprint_compat = true,
-atlas = 'cubeConsumable',
-pos = { x = 5, y = 0 },
+atlas = 'uniq',
+pos = { x = 0, y = 2 },
 cost = 26,
 thecaticon = 1,
 calculate = function(self, card, context)
-  if context.using_consumeable and context.consumeable.ability.set == "Code" then
-  card.ability.extra.e_chips = card.ability.extra.e_chips + card.ability.extra.e_chipsGain
-  end
+
+end
+}
+SMODS.Joker {
+key = 'vessel',
+loc_txt = {
+  name = "{C:dark_edition,E:1}UNSTABLE VESSEL{}",
+  text = {
+    "{C:purple,s:3}You don't want to know.{}",
+    "{X:dark_edition,C:white,E:1,s:0.7}^^^0.1{C:inactive,s:0.7} Chips and Mult"
+  }
+},
+loc_vars = function(self, info_queue, card)
+  return { vars = { card.ability.extra.e_chips, card.ability.extra.e_mult } }
+end,
+config = { extra = { e_chips == 0.1, e_mult == 0.1 } },
+rarity = 'gj_detri',
+unlocked = true,
+blueprint_compat = true,
+eternal = 1,
+atlas = 'uniq',
+pos = { x = 0, y = 3 },
+cost = 0,
+set_ability = function(self, card, initial)
+  card:set_eternal(true)
+end,
+calculate = function(self, card, context)
  if context.joker_main then
   return {
-    e_chips = card.ability.extra.e_chips
+    eee_chips = 0.1, -- fight me all you want, this is how i make sure oil lamp or gemini cant change the values
+    eee_mult = 0.1
  }
   end
 end
 }
-end
-SMODS.ConsumableType {
+--[[SMODS.ConsumableType {
 key = 'cube',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('00ff00'),
+secondary_colour = HEX('aa3311'),
 loc_txt = {
   collection = 'Cubes',
   name = 'Cube'
 },
-shop_rate = 0.1
-}
+shop_rate = 2
+} ]]
 --[[ SMODS.ConsumableType {
 key = 'ship',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('ff00ff'),
+secondary_colour = HEX('f4b6cc'),
 loc_txt = {
   collection = 'Ships',
   name = 'Ship'
 },
 shop_rate = 2
 } ]]
-SMODS.ConsumableType {
+--[[SMODS.ConsumableType {
 key = 'ball',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('ff0000'),
+secondary_colour = HEX('a576cb'),
 loc_txt = {
   collection = 'Balls',
   name = 'Ball'
 },
-shop_rate = 0.1
-} --[[
+shop_rate = 2 
+}]] --[[
 SMODS.ConsumableType {
 key = 'ufo',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('ffaa00'),
+secondary_colour = HEX('145afd'),
 loc_txt = {
   collection = 'UFOs',
   name = 'UFO'
@@ -916,7 +1059,7 @@ SMODS.ConsumableType {
 key = 'wave',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('00ffff'),
+secondary_colour = HEX('456dcb'),
 loc_txt = {
   collection = 'Waves',
   name = 'Wave'
@@ -927,7 +1070,7 @@ SMODS.ConsumableType {
 key = 'robot',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('ffffff'),
+secondary_colour = HEX('768aaa'),
 loc_txt = {
   collection = 'Robots',
   name = 'Robot'
@@ -938,7 +1081,7 @@ SMODS.ConsumableType {
 key = 'spider',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('4500ff'),
+secondary_colour = HEX('acbfde'),
 loc_txt = {
   collection = 'Spiders',
   name = 'Spider'
@@ -949,7 +1092,7 @@ SMODS.ConsumableType {
 key = 'swing',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('ffff00'),
+secondary_colour = HEX('123abc'),
 loc_txt = {
   collection = 'Swings',
   name = 'Swing'
@@ -960,13 +1103,13 @@ SMODS.ConsumableType {
 key = 'jetpack',
 collection_rows = {7, 7, 7},
 primary_colour = G.C.CHIPS,
-secondary_colour = HEX('660066'),
+secondary_colour = HEX('654812'),
 loc_txt = {
   collection = 'Jetpacks',
   name = 'Jetpack'
 },
 shop_rate = 2
-}
+} 
 SMODS.ConsumableType {
 key = 'edit',
 collection_rows = {7, 7, 7},
@@ -977,7 +1120,7 @@ loc_txt = {
   name = 'Editor'
 },
 shop_rate = 2
-}  ]]
+} ]]
 SMODS.Consumable {
 key = 'mube',
 set = 'cube',
@@ -1202,7 +1345,7 @@ loc_txt = {
 } --[[balls]]
 }
 
-SMODS.Seal {
+ --[[ SMODS.Seal {
 name = "Square Seal",
 key = "sqSeal",
 badge_colour = HEX("00ff00"),
@@ -1250,11 +1393,48 @@ calculate = function(self, card, context)
     end
   end
 end,
-}
-
+} ]]
 --[[ SMODS.Atlas {
 key = "seal_atlas",
 path = "modded_seal.png",
 px = 71,
 py = 95
 } ]]
+
+
+SMODS.Blind {
+key = 'unstable',
+loc_txt = {
+  name = "GJ_blind:destroyChicot (Vessel Escape)",
+  text = {
+    "If I have to KILL YOUR RUN to escape, so be it.",
+    "(Blind will debuff Blind-Disabling Jokers)",
+    "Brutal Blind Size"
+  }
+},
+dollars = 10,
+mult = 32,
+boss = {min = 39, max = 10 },
+boss_colour = HEX("450061"),
+pos = { x = 0, y = 0 },
+atlas = 'gj_balatrofinalboss',
+calculate = function(self, blind, context)
+    if context.debuff_card then
+    if context.debuff_card.config.center_key == "j_chicot" then -- failed cuz chicot proc
+      return { debuff = true }
+    end
+    if context.debuff_card.config.center_key == "j_luchador" then
+      return { debuff = true }
+    end
+    if context.debuff_card.config.center_key == "j_yahimod_muchotexto" then
+      return { debuff = true }
+    end
+  end
+   if context.setting_blind then
+    if next(SMODS.find_card("j_gj_fireicerealjokerlol")) then
+      SMODS.destroy_cards(SMODS.find_card("j_gj_fireicerealjokerlol"))
+    end
+    SMODS.add_card{ key = "j_gj_vessel" }
+  end
+end,
+}
