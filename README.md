@@ -11,3 +11,7 @@ Here's what you can expect:
 
   There are .pdn files and other files in relation to future additions and other things.
   .pdn files can be opened with paintdotnet if you have it
+
+
+Do not download from the Releases tab, its used for changelogs!
+DOWNLOAD FROM MAIN BRANCH INSTEAD
