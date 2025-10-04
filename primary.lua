@@ -1121,7 +1121,7 @@ loc_txt = {
 },
 shop_rate = 2
 } ]]
-SMODS.Consumable {
+--[[ SMODS.Consumable {
 key = 'mube',
 set = 'cube',
 atlas = 'cubeConsumable',
@@ -1136,7 +1136,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {}Level up all hands by the amount of Jolly Jokers in joker tray divided by 2."
   }
-} --[[m]]
+}
 }
 SMODS.Consumable {
 key = 'firstcube',
@@ -1151,7 +1151,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {}Level down/up High Card by any number between -2 and 4."
   }
-} --[[eometry ash]]
+}
 }
 SMODS.Consumable {
 key = 'cube02',
@@ -1166,7 +1166,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {}Level down/up Pair by any number between -2 and 4.",
   }
-} --[[jolly but not jolly]]
+}
 }
 SMODS.Consumable {
 key = 'cube03',
@@ -1181,7 +1181,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {}Level down/up Three of a Kind by any number between -2 and 4.",
   }
-} --[[3]]
+}
 }
 SMODS.Consumable {
 key = 'cube04',
@@ -1197,7 +1197,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {}Level down/up Four of a Kind by any number between -2 and 4.",
   }
-} --[[number four]]
+}
 }
 SMODS.Consumable {
 key = 'cube13',
@@ -1212,7 +1212,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {}Your Most Played and Least Played Hand swap levels.",
   }
-} --[[support]]
+}
 }
 SMODS.Consumable {
 key = 'cube98',
@@ -1228,7 +1228,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {C:Mult}Swap all levels around, then add either 0 or 1.{}"
   }
-} --[[moew]]
+}
 }
 SMODS.Consumable {
 key = 'cube329',
@@ -1244,7 +1244,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {C:mult}???{}"
   }
-} --[[lexi]]
+}
 }
 SMODS.Consumable {
 key = 'cube356',
@@ -1260,7 +1260,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {C:mult}???{}"
   }
-} --[[living black hole]]
+}
 }
 SMODS.Consumable {
 key = 'cube376',
@@ -1276,7 +1276,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {C:mult}???{}"
   }
-} --[[robort]]
+}
 }
 SMODS.Consumable {
 key = 'cube405',
@@ -1293,7 +1293,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {C:mult}???{}"
   }
-} --[[xolotl]]
+}
 }
 SMODS.Consumable {
 key = 'cube457',
@@ -1309,7 +1309,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {C:mult}???{}"
   }
-} --[[bnuuy]]
+}
 }
 SMODS.Consumable {
 key = 'ball001',
@@ -1324,7 +1324,7 @@ loc_txt = {
     '{C:inactive} No Effect. {}',
     "{C:inactive}Intended Effect: {C:mult}???{}"
   }
-} --[[balls]]
+}
 }
 SMODS.Consumable {
 key = 'ballkor',
@@ -1342,8 +1342,8 @@ loc_txt = {
     "{C:inactive}Intended Effect: {C:mult}???{}",
     "{C:inactive}Where is the 'Singularis'?????"
   }
-} --[[balls]]
 }
+} -]]
 
  --[[ SMODS.Seal {
 name = "Square Seal",
