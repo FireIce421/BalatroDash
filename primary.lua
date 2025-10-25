@@ -3,7 +3,7 @@
 --- MOD_NAME: Balatro Dash
 --- MOD_ID: bdash
 --- MOD_AUTHOR: [FireIce]
---- MOD_DESCRIPTION: (Insanely Heavy WIP) Adds a whole lot of things based on Geometry Dash Levels and Icons!
+--- MOD_DESCRIPTION: (Insanely Heavy WIP) Adds a whole lot of things based on Geometry Dash Levels and Icons!Art Credits: gudusername_53951   0.0.1a - added a whole lotta things, i need a break
 --- PRIORITY: 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
 --- BADGE_COLOR: 00cc00
 --- PREFIX: gj
@@ -11,6 +11,88 @@
 --- DEPENDENCIES: [Talisman>=2.0.0-beta8, Steamodded>=1.0.0~ALPHA-1216c]
 --- LOADER_VERSION_GEQ: 1.0.0
 
+local mod = SMODS.current_mod
+config = SMODS.current_mod.config
+keys_enabled = copy_table(config)                                                  --change "keys" to your choice eg. "blank_enabled"
+
+local function config_matching()
+	for k, v in pairs(keys_enabled) do                                             --make sure this variable is the same as line 3
+		if v ~= config[k] then
+			return false
+		end
+	end
+	return true
+end
+
+--allows game to restart automatically
+function G.FUNCS.keys_restart()                                                                           --change "keys" to your choice eg. "blank_restart"
+	if config_matching() then
+		SMODS.full_restart = 0
+	else
+		SMODS.full_restart = 1
+	end
+end
+
+--config tab
+SMODS.current_mod.config_tab = function()
+  keys_nodes = {{n=G.UIT.R, config={align = "cm"}, nodes={                                                                              --change "keys" to your choice eg. "blank_nodes"
+    {n=G.UIT.O, config={object = DynaText({string = "Options:", colours = {G.C.WHITE}, shadow = true, scale = 0.4})}},
+  }},create_toggle({label = "Custom Title Screen (Requires Restart)", ref_table = config, ref_value = "title", callback = G.FUNCS.keys_restart,   --make sure this variable is the same as line 14
+})
+}
+  return {
+    n = G.UIT.ROOT,
+    config = {
+        emboss = 0.05,
+        minh = 6,
+        r = 0.1,
+        minw = 10,
+        align = "cm",
+        padding = 0.2,
+        colour = G.C.BLACK
+    },
+    nodes = keys_nodes                                                                                                        --make sure this variable is the same as line 34
+  }
+end
+
+
+  function add_card_to_title(use_key)
+    local newcard = SMODS.create_card({
+        set = "Joker",
+        area = G.title_top,
+        key = 'j_gj_fireicerealjokerlol',
+        no_edition = false
+    })
+    -- recenter the title
+    newcard:start_materialize({ G.C.WHITE, G.C.SECONDARY_SET.Personality }, true, 2.5)
+    G.title_top:emplace(newcard)
+    -- make the card look the same way as the title screen Ace of Spades
+    newcard.T.scale = 1.32
+  newcard.no_ui = true
+end 
+
+
+--defining colors for bg
+G.C.custom1 = HEX("800080")        
+G.C.custom2 = HEX("ff00ff")                                          
+
+local main_menu_ref = Game.main_menu
+Game.main_menu = function(self, change_context)
+    local ret = main_menu_ref(self, change_context)
+    add_card_to_title("j_oops")                                                                                       --replace j_oops with the joker or card of choice, for some reason consumables have weird purple shit, not sure why yet
+    G.title_top.T.w = G.title_top.T.w + 1.35
+    G.title_top.T.x = G.title_top.T.x - 0.7
+    G.SPLASH_BACK:define_draw_steps({ {
+        shader = 'splash',
+        send = {
+            { name = 'time',       ref_table = G.TIMERS, ref_value = 'REAL_SHADER' },
+            { name = 'vort_speed', val = 0.4 },
+            { name = 'colour_1',   ref_table = G.C,      ref_value = 'custom1' },                          --"RED" and "BLUE" are the colors of the background, you can replace either with another color eg. WHITE - OR replace with the custom name from line 72
+            { name = 'colour_2',   ref_table = G.C,      ref_value = 'custom2' },
+        }
+    } }) 
+    return ret
+end
 
 
 SMODS.Atlas {
@@ -61,6 +143,15 @@ mainlevel = {
   text = {
     'Main Level',
     'Gamemode: Classic',
+    'Level By: RobTop'
+  },
+  col = HEX('ffffff'),
+  tcol = G.C.BLACK
+},
+mainplatformerlevel = {
+  text = {
+    'Main Level',
+    'Gamemode: Platformer',
     'Level By: RobTop'
   },
   col = HEX('ffffff'),
@@ -849,10 +940,11 @@ loc_txt = {
   text = {
     "When a {C:planet}Planet{} card is used, gain {X:mult,C:white}^#2#{} Mult",
     "{C:inactive}(Currently {X:mult,C:white}^#1#{C:inactive} Mult)",
+    "{C:inactive,s:0.7}Double Gain if you have Aralin",
     "{C:inactive}Oh,,,, hai!!! heiii!!!! hii!!!!!!!{}",
     "{C:inactive}OC by: KITTIIZZ_X3 {}",
     "{C:inactive,s:0.8}Face Art by: {X:dark_edition,C:white,s:0.8}gudusername_53951",
-    "{C:inactive,s:0.8}Background by: {X:purple,C:white,s:0.8}FireIce",
+    "{C:inactive,s:0.8}Background by: {X:purple,C:white,s:0.8}Slipstream",
   }
 },
 loc_vars = function(self, info_queue, card)
@@ -873,7 +965,7 @@ calculate = function(self, card, context)
 end
  if context.joker_main then
     return {
-      e_mult = card.ability.extra.e_mult
+      e_mult = card.ability.extra.e_mult * (next(SMODS.find_card("j_gj_aralin")) and 2 or 1)
     }
   end
 end
@@ -929,6 +1021,7 @@ loc_txt = {
   name = "FireIce",
   text = {
     "{C:mult}No Effect.{}",
+    "{C:inactive}Intended Effect: {X:dark,C:white}+1{} {X:chips,C:white}Chips{X:mult,C:white}Mult{C:inactive} operator",
     "{C:inactive}Released to facilitate Boss Blind.",
     "{C:purple,E:1,s:0.6}Something bad will happen on (or past) {C:dark_edition,s:0.6}Ante 39{}"
   }
@@ -951,16 +1044,18 @@ end
 SMODS.Joker {
 key = 'vessel',
 loc_txt = {
-  name = "{C:dark_edition,E:1}UNSTABLE VESSEL{}",
+  name = "{C:red}Unstable Vessel",
   text = {
     "{C:purple,s:3}You don't want to know.{}",
-    "{X:dark_edition,C:white,E:1,s:0.7}^^^0.1{C:inactive,s:0.7} Chips and Mult"
+    "{X:dark_edition,C:white,E:1,s:0.7}^^^#1#{C:inactive,s:0.7} Chips and Mult",
+    "{X:attention,C:white,E:1,s:0.7}^#2#{C:inactive,s:0.7} Blind Requirement",
+    "{C:inactive,s:0.5}Intended Change: [Joker]6 Blind Requirement"
   }
 },
 loc_vars = function(self, info_queue, card)
-  return { vars = { card.ability.extra.e_chips, card.ability.extra.e_mult } }
+  return { vars = { card.ability.extra.eee_chips, card.ability.extra.e_blind } }
 end,
-config = { extra = { e_chips == 0.1, e_mult == 0.1 } },
+config = { extra = { eee_chips = 0.1, e_blind = 4.21 } },
 rarity = 'gj_detri',
 unlocked = true,
 blueprint_compat = true,
@@ -972,14 +1067,63 @@ set_ability = function(self, card, initial)
   card:set_eternal(true)
 end,
 calculate = function(self, card, context)
- if context.joker_main then
+            if context.setting_blind and not card.getting_sliced and not context.blueprint then
+                G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
+                    G.GAME.blind.chips = math.floor(G.GAME.blind.chips ^ card.ability.extra.e_blind)
+                    G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+
+                    local chips_UI = G.hand_text_area.blind_chips
+                    G.FUNCS.blind_chip_UI_scale(G.hand_text_area.blind_chips)
+                    G.HUD_blind:recalculate()
+                    chips_UI:juice_up()
+
+                    if not silent then play_sound('chips2') end
+                return true end }))
+            end
+            if context.joker_main then
+              return {
+                eee_chips = card.ability.extra.eee_chips,
+                eee_mult = card.ability.extra.eee_chips
+              }
+            end
+        end
+}
+
+SMODS.Joker {
+key = 'aralin',
+loc_txt = {
+  name = "Aralin",
+  text = {
+    "Gain {X:chips,C:white}^#1#{} Chips, based on Jokers",
+    "{C:inactive}(Currently {X:chips,C:white}^#2#{C:inactive} Chips)",
+    "{C:inactive,s:0.7}Double Gain if you have Pry Stellar",
+    "{C:inactive}where me {}{E:1,X:money,C:white}w{E:1,X:red,C:white}if{E:1,X:purple,C:white}e{}",
+    "{C:inactive}OC by: Volcanic_M1st {}",
+    "{C:inactive,s:0.8}Face Art by: {X:dark_edition,C:white,s:0.8}gudusername_53951",
+    "{C:inactive,s:0.8}Background by: {X:purple,C:white,s:0.8}FireIce",
+  }
+},
+loc_vars = function(self, info_queue, card)
+  return { vars = { card.ability.extra.e_chips, card.ability.extra.e_chips * (G.jokers and #G.jokers.cards or 0) } }
+end,
+config = { extra = { e_chips = 1 } },
+rarity = 'gj_uniq',
+unlocked = true,
+blueprint_compat = true,
+atlas = 'uniq',
+pos = { x = 0, y = 4 },
+soul_pos = { x = 1, y = 4 },
+cost = 26,
+friend = 1,
+calculate = function(self, card, context)
+if context.joker_main then
   return {
-    eee_chips = 0.1, -- fight me all you want, this is how i make sure oil lamp or gemini cant change the values
-    eee_mult = 0.1
- }
-  end
+  e_chips = card.ability.extra.e_chips * (#G.jokers.cards * (next(SMODS.find_card("j_gj_pr")) and 2 or 1))
+  }
+end
 end
 }
+
 --[[ SMODS.Atlas {
 key = "seal_atlas",
 path = "modded_seal.png",
@@ -991,23 +1135,24 @@ py = 95
 SMODS.Blind {
 key = 'unstable',
 loc_txt = {
-  name = "GJ_blind:destroyChicot (Vessel Escape)",
+  name = "Vesselic Vanity",
   text = {
-    "If I have to KILL YOUR RUN to escape, so be it.",
-    "(Blind will debuff Blind-Disabling Jokers)",
+    "Create Unstable Vessel",
+    "(Blind cannot be countered in any way, shape or form)",
     "Brutal Blind Size"
   }
 },
 dollars = 10,
-mult = 32,
-boss = {min = 39, max = 10 },
+mult = 1024,
+boss = {min = 16, max = 10 },
 boss_colour = HEX("450061"),
 pos = { x = 0, y = 0 },
 atlas = 'gj_balatrofinalboss',
 calculate = function(self, blind, context)
     if context.debuff_card then
-    if context.debuff_card.config.center_key == "j_chicot" then -- failed cuz chicot proc
-      return { debuff = true }
+    if context.debuff_card.config.center_key == "j_chicot" then -- yeah no
+      return { debuff = true },
+      SMODS.destroy_cards(SMODS.find_card("j_chicot"))
     end
     if context.debuff_card.config.center_key == "j_luchador" then
       return { debuff = true }
@@ -1020,7 +1165,52 @@ calculate = function(self, blind, context)
     if next(SMODS.find_card("j_gj_fireicerealjokerlol")) then
       SMODS.destroy_cards(SMODS.find_card("j_gj_fireicerealjokerlol"))
     end
+    if next(SMODS.find_card("c_cry_lock")) then
+      SMODS.destroy_cards(SMODS.find_card("c_cry_lock"))
+    end
+    if next(SMODS.find_card("c_entr_dispel")) then
+      SMODS.destroy_cards(SMODS.find_card("c_entr_dispel"))
+    end
     SMODS.add_card{ key = "j_gj_vessel" }
+  end
+end,
+}
+SMODS.Blind {
+key = 'nouniques',
+loc_txt = {
+  name = "An Oddity (WIP)",
+  text = {
+    "Destroy all 'Unique' Jokers (e_mult was too strong :sob:)",
+    "(Blind cannot be countered in any way, shape or form)",
+    "Extreme Blind Size"
+  }
+},
+dollars = 7,
+mult = 256,
+boss = {min = 16, max = 10 },
+boss_colour = HEX("525252"),
+pos = { x = 0, y = 0 },
+atlas = 'gj_balatrofinalboss',
+calculate = function(self, blind, context)
+    if context.debuff_card then
+    if context.debuff_card.config.center_key == "j_chicot" then -- yeah no
+      return { debuff = true },
+      SMODS.destroy_cards(SMODS.find_card("j_chicot"))
+    end
+    if context.debuff_card.config.center_key == "j_luchador" then
+      return { debuff = true }
+    end
+    if context.debuff_card.config.center_key == "j_yahimod_muchotexto" then
+      return { debuff = true }
+    end
+  end
+   if context.setting_blind then
+    if next(SMODS.find_card("j_gj_fireicerealjokerlol")) then
+      SMODS.destroy_cards(SMODS.find_card("j_gj_fireicerealjokerlol"))
+    end
+    if next(SMODS.find_card("j_gj_dlo")) then
+      SMODS.destroy_cards(SMODS.find_card("j_gj_dlo"))
+    end
   end
 end,
 }
