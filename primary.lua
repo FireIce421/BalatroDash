@@ -1030,7 +1030,6 @@ atlas = 'uniq',
 pos = { x = 0, y = 4 },
 soul_pos = { x = 1, y = 4 },
 cost = 26,
-friend = 1,
 calculate = function(self, card, context)
 if context.joker_main then
   return {
@@ -1080,12 +1079,6 @@ calculate = function(self, blind, context)
    if context.setting_blind then
     if next(SMODS.find_card("j_gj_fireicerealjokerlol")) then
       SMODS.destroy_cards(SMODS.find_card("j_gj_fireicerealjokerlol"))
-    end
-    if next(SMODS.find_card("c_cry_lock")) then
-      SMODS.destroy_cards(SMODS.find_card("c_cry_lock"))
-    end
-    if next(SMODS.find_card("c_entr_dispel")) then
-      SMODS.destroy_cards(SMODS.find_card("c_entr_dispel"))
     end
     SMODS.add_card{ key = "j_gj_vessel" }
   end
