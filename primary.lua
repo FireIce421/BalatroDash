@@ -11,56 +11,11 @@
 --- DEPENDENCIES: [Talisman>=2.0.0-beta8, Steamodded>=1.0.0~ALPHA-1216c]
 --- LOADER_VERSION_GEQ: 1.0.0
 
-local mod = SMODS.current_mod
-config = SMODS.current_mod.config
-keys_enabled = copy_table(config)                                                  --change "keys" to your choice eg. "blank_enabled"
-
-local function config_matching()
-	for k, v in pairs(keys_enabled) do                                             --make sure this variable is the same as line 3
-		if v ~= config[k] then
-			return false
-		end
-	end
-	return true
-end
-
---allows game to restart automatically
-function G.FUNCS.keys_restart()                                                                           --change "keys" to your choice eg. "blank_restart"
-	if config_matching() then
-		SMODS.full_restart = 0
-	else
-		SMODS.full_restart = 1
-	end
-end
-
---config tab
-SMODS.current_mod.config_tab = function()
-  keys_nodes = {{n=G.UIT.R, config={align = "cm"}, nodes={                                                                              --change "keys" to your choice eg. "blank_nodes"
-    {n=G.UIT.O, config={object = DynaText({string = "Options:", colours = {G.C.WHITE}, shadow = true, scale = 0.4})}},
-  }},create_toggle({label = "Custom Title Screen (Requires Restart)", ref_table = config, ref_value = "title", callback = G.FUNCS.keys_restart,   --make sure this variable is the same as line 14
-})
-}
-  return {
-    n = G.UIT.ROOT,
-    config = {
-        emboss = 0.05,
-        minh = 6,
-        r = 0.1,
-        minw = 10,
-        align = "cm",
-        padding = 0.2,
-        colour = G.C.BLACK
-    },
-    nodes = keys_nodes                                                                                                        --make sure this variable is the same as line 34
-  }
-end
-
-
   function add_card_to_title(use_key)
     local newcard = SMODS.create_card({
         area = G.title_top,
-        key = 'j_gj_fireicerealjokerlol',
-        no_edition = false
+        key = 'gj_fireicerealjokerlol',
+        no_edition = true
     })
     -- recenter the title
     newcard:start_materialize({ G.C.WHITE, G.C.SECONDARY_SET.Personality }, true, 2.5)
@@ -69,7 +24,6 @@ end
     newcard.T.scale = 1.32
   newcard.no_ui = true
 end 
-
 
 --defining colors for bg
 G.C.custom1 = HEX("800080")        
