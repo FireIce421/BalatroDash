@@ -58,7 +58,6 @@ end
 
   function add_card_to_title(use_key)
     local newcard = SMODS.create_card({
-        set = "Joker",
         area = G.title_top,
         key = 'j_gj_fireicerealjokerlol',
         no_edition = false
