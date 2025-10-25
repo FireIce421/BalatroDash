@@ -11,6 +11,45 @@
 --- DEPENDENCIES: [Talisman>=2.0.0-beta8, Steamodded>=1.0.0~ALPHA-1216c]
 --- LOADER_VERSION_GEQ: 1.0.0
 
+
+
+  function add_card_to_title(use_key)
+    local newcard = SMODS.create_card({
+        area = G.title_top,
+        key = 'j__gjfireicerealjokerlol',
+        no_edition = false
+    })
+    -- recenter the title
+    newcard:start_materialize({ G.C.WHITE, G.C.SECONDARY_SET.Personality }, true, 2.5)
+    G.title_top:emplace(newcard)
+    -- make the card look the same way as the title screen Ace of Spades
+    newcard.T.scale = 1.32
+  newcard.no_ui = true
+end 
+
+
+--defining colors for bg
+G.C.custom1 = HEX("800080")        
+G.C.custom2 = HEX("ff00ff")                                          
+
+local main_menu_ref = Game.main_menu
+Game.main_menu = function(self, change_context)
+    local ret = main_menu_ref(self, change_context)                                                                                      --replace j_oops with the joker or card of choice, for some reason consumables have weird purple shit, not sure why yet
+    G.title_top.T.w = G.title_top.T.w + 1.35
+    G.title_top.T.x = G.title_top.T.x - 0.7
+    G.SPLASH_BACK:define_draw_steps({ {
+        shader = 'splash',
+        send = {
+            { name = 'time',       ref_table = G.TIMERS, ref_value = 'REAL_SHADER' },
+            { name = 'vort_speed', val = 0.4 },
+            { name = 'colour_1',   ref_table = G.C,      ref_value = 'custom1' },                          --"RED" and "BLUE" are the colors of the background, you can replace either with another color eg. WHITE - OR replace with the custom name from line 72
+            { name = 'colour_2',   ref_table = G.C,      ref_value = 'custom2' },
+        }
+    } }) 
+    return ret
+end
+
+
 SMODS.Atlas {
   -- Key for code to find it with
   key = "jokerList",
@@ -1030,6 +1069,7 @@ atlas = 'uniq',
 pos = { x = 0, y = 4 },
 soul_pos = { x = 1, y = 4 },
 cost = 26,
+friend = 1,
 calculate = function(self, card, context)
 if context.joker_main then
   return {
@@ -1080,7 +1120,52 @@ calculate = function(self, blind, context)
     if next(SMODS.find_card("j_gj_fireicerealjokerlol")) then
       SMODS.destroy_cards(SMODS.find_card("j_gj_fireicerealjokerlol"))
     end
+    if next(SMODS.find_card("c_cry_lock")) then
+      SMODS.destroy_cards(SMODS.find_card("c_cry_lock"))
+    end
+    if next(SMODS.find_card("c_entr_dispel")) then
+      SMODS.destroy_cards(SMODS.find_card("c_entr_dispel"))
+    end
     SMODS.add_card{ key = "j_gj_vessel" }
+  end
+end,
+}
+SMODS.Blind {
+key = 'nouniques',
+loc_txt = {
+  name = "An Oddity (WIP)",
+  text = {
+    "Destroy all 'Unique' Jokers (e_mult was too strong :sob:)",
+    "(Blind cannot be countered in any way, shape or form)",
+    "Extreme Blind Size"
+  }
+},
+dollars = 7,
+mult = 256,
+boss = {min = 16, max = 10 },
+boss_colour = HEX("525252"),
+pos = { x = 0, y = 0 },
+atlas = 'gj_balatrofinalboss',
+calculate = function(self, blind, context)
+    if context.debuff_card then
+    if context.debuff_card.config.center_key == "j_chicot" then -- yeah no
+      return { debuff = true },
+      SMODS.destroy_cards(SMODS.find_card("j_chicot"))
+    end
+    if context.debuff_card.config.center_key == "j_luchador" then
+      return { debuff = true }
+    end
+    if context.debuff_card.config.center_key == "j_yahimod_muchotexto" then
+      return { debuff = true }
+    end
+  end
+   if context.setting_blind then
+    if next(SMODS.find_card("j_gj_fireicerealjokerlol")) then
+      SMODS.destroy_cards(SMODS.find_card("j_gj_fireicerealjokerlol"))
+    end
+    if next(SMODS.find_card("j_gj_dlo")) then
+      SMODS.destroy_cards(SMODS.find_card("j_gj_dlo"))
+    end
   end
 end,
 }
