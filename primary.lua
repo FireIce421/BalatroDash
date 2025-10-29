@@ -11,13 +11,66 @@
 --- DEPENDENCIES: [Talisman>=2.0.0-beta8, Steamodded>=1.0.0~ALPHA-1216c]
 --- LOADER_VERSION_GEQ: 1.0.0
 
+local mod = SMODS.current_mod
+config = SMODS.current_mod.config
+keys_enabled = copy_table(config)                                                  --change "keys" to your choice eg. "blank_enabled"
 
+local function config_matching()
+	for k, v in pairs(keys_enabled) do                                             --make sure this variable is the same as line 3
+		if v ~= config[k] then
+			return false
+		end
+	end
+	return true
+end
+
+--allows game to restart automatically
+function G.FUNCS.keys_restart()                                                                           --change "keys" to your choice eg. "blank_restart"
+	if config_matching() then
+		SMODS.full_restart = 0
+	else
+		SMODS.full_restart = 1
+	end
+end
+
+--config tab
+SMODS.current_mod.config_tab = function()
+  keys_nodes = {{n=G.UIT.R, config={align = "cm"}, nodes={                                                                              --change "keys" to your choice eg. "blank_nodes"
+    {n=G.UIT.O, config={object = DynaText({string = "Options:", colours = {G.C.WHITE}, shadow = true, scale = 0.4})}},
+  }},create_toggle({label = "Custom Title Screen (Requires Restart)", ref_table = config, ref_value = "title", callback = G.FUNCS.keys_restart,   --make sure this variable is the same as line 14
+})
+}
+  return {
+    n = G.UIT.ROOT,
+    config = {
+        emboss = 0.05,
+        minh = 6,
+        r = 0.1,
+        minw = 10,
+        align = "cm",
+        padding = 0.2,
+        colour = G.C.BLACK
+    },
+    nodes = keys_nodes                                                                                                        --make sure this variable is the same as line 34
+  }  
+end
+
+--title screen
+if config.title then            
+  SMODS.Atlas({
+    key = "balatro",
+    path = "balatro.png",                                                                                                    --make sure this is the name of your title screen png in assets folder, if not change the file name to this
+    px = 333,
+    py = 216,
+    prefix_config = { key = false }
+  })
 
   function add_card_to_title(use_key)
     local newcard = SMODS.create_card({
+        set = "Joker",
         area = G.title_top,
-        key = 'j__gjfireicerealjokerlol',
-        no_edition = false
+        key = use_key,
+        no_edition = true
     })
     -- recenter the title
     newcard:start_materialize({ G.C.WHITE, G.C.SECONDARY_SET.Personality }, true, 2.5)
@@ -29,12 +82,13 @@ end
 
 
 --defining colors for bg
-G.C.custom1 = HEX("800080")        
-G.C.custom2 = HEX("ff00ff")                                          
+G.C.custom1 = HEX("800080")
+G.C.custom2 = HEX("ff00ff")                                                   --change "custom1" to custom name, replace "7734eb" with your own hex code for your own color. copy the line and paste underneath it for more colors.
 
 local main_menu_ref = Game.main_menu
 Game.main_menu = function(self, change_context)
-    local ret = main_menu_ref(self, change_context)                                                                                      --replace j_oops with the joker or card of choice, for some reason consumables have weird purple shit, not sure why yet
+    local ret = main_menu_ref(self, change_context)
+    add_card_to_title("j_gj_fireicerealjokerlol")                                                                                       --replace j_oops with the joker or card of choice, for some reason consumables have weird purple shit, not sure why yet
     G.title_top.T.w = G.title_top.T.w + 1.35
     G.title_top.T.x = G.title_top.T.x - 0.7
     G.SPLASH_BACK:define_draw_steps({ {
@@ -48,7 +102,7 @@ Game.main_menu = function(self, change_context)
     } }) 
     return ret
 end
-
+end
 
 SMODS.Atlas {
   -- Key for code to find it with
@@ -390,83 +444,6 @@ end
 -- end
 
 SMODS.Rarity {
-key = "na",
-loc_txt = {
-  name = 'NA', -- used on rarity badge
-},
-pools = {
-  ["Joker"] = true --uses self.default_rate when polled
-},
-badge_colour = HEX('999999'),
-default_weight = 0.0075,
-}
-SMODS.Rarity {
-key = "ez",
-loc_txt = {
-  name = 'Easy', -- used on rarity badge
-},
-pools = {
-  ["Joker"] = true --uses self.default_rate when polled
-},
-badge_colour = HEX('1114aa'),
-default_weight = 0.075,
-}
-SMODS.Rarity {
-key = "norm",
-loc_txt = {
-  name = 'Normal', -- used on rarity badge
-},
-pools = {
-  ["Joker"] = true --uses self.default_rate when polled
-},
-badge_colour = HEX('00aa00'),
-default_weight = 0.125,
-}
-SMODS.Rarity {
-key = "hr",
-loc_txt = {
-  name = 'Hard', -- used on rarity badge
-},
-pools = {
-  ["Joker"] = true --uses self.default_rate when polled
-},
-badge_colour = HEX('aaaa00'),
-default_weight = 0.0075,
-}
-SMODS.Rarity {
-key = "hrdr",
-loc_txt = {
-  name = 'Harder', -- used on rarity badge
-},
-pools = {
-  ["Joker"] = true --uses self.default_rate when polled
-},
-badge_colour = HEX('aa0000'),
-default_weight = 0.05,
-}
-SMODS.Rarity {
-key = "ins",
-loc_txt = {
-  name = 'Insane', -- used on rarity badge
-},
-pools = {
-  ["Joker"] = true --uses self.default_rate when polled
-},
-badge_colour = HEX('ff00ff'),
-default_weight = 0.01,
-}
-SMODS.Rarity {
-key = "hrdm",
-loc_txt = {
-  name = 'Hard Demon', -- used on rarity badge
-},
-pools = {
-  ["Joker"] = true --uses self.default_rate when polled
-},
-badge_colour = HEX('ff0000'),
-default_weight = 0.0075,
-}
-SMODS.Rarity {
 key = "uniq",
 loc_txt = {
   name = 'Unique', -- used on rarity badge
@@ -502,8 +479,8 @@ SMODS.Joker {
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.mult } }
   end,
-  config = { extra = { mult = 6 } },
-  rarity = 'gj_ez',
+  config = { extra = { mult = 2 } },
+  rarity = 1,
   unlocked = true,
   blueprint_compat = true,
   mainlevel = true,
@@ -528,15 +505,15 @@ SMODS.Joker {
  loc_txt = {
    name = 'Back on Track',
    text = {
-     "{C:chips}+#1#{} Chips for every Face Card",
+     "{C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult for every Face Card",
      "{C:inactive}(Card must Score){}"
    }
  },
  loc_vars = function(self, info_queue, card)
-   return { vars = { card.ability.extra.chips } }
+   return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
  end,
- config = { extra = { chips = 90 } },
- rarity = 'gj_ez',
+ config = { extra = { chips = 15, mult = 3 } },
+ rarity = 1,
  unlocked = true,
  mainlevel = true,
  firstrelease = true,
@@ -547,7 +524,10 @@ SMODS.Joker {
  calculate = function(self, card, context)
   if context.individual and context.cardarea == G.play then
     if context.other_card:is_face() then
-      return {chips = card.ability.extra.chips}
+      return {
+        chips = card.ability.extra.chips,
+        mult = card.ability.extra.mult
+      }
     end
   end
 end
@@ -566,7 +546,7 @@ loc_txt = {
    return { vars = { card.ability.extra.repetitions } }
  end,
 config = { extra = { repetitions = 1 } },
-rarity = 'gj_norm',
+rarity = 2,
 unlocked = true,
 mainlevel = true,
 firstrelease = true,
@@ -601,7 +581,7 @@ loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.mult_mod, card.ability.extra.mult } }
 end,
 config = { extra = { mult = 0, mult_mod = 20 } },
-rarity = 'gj_norm',
+rarity = 1,
 unlocked = true,
 discovered = true,
 mainlevel = true,
@@ -646,7 +626,7 @@ loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.chips } }
 end,
 config = { extra = { chips = 0 } },
-rarity = 'gj_hr',
+rarity = 2,
 unlocked = true,
 mainlevel = true,
 firstrelease = true,
@@ -679,7 +659,7 @@ loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult } }
 end,
 config = { extra = { mult = 0 } },
-rarity = 'gj_hr',
+rarity = 2,
 unlocked = true,
 mainlevel = true,
 firstrelease = true,
@@ -710,7 +690,7 @@ loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult } }
 end,
 config = { extra = { mult = 1 } },
-rarity = 'gj_na',
+rarity = 2,
 unlocked = true,
 mainlevel = true,
 unreleased = true,
@@ -728,15 +708,15 @@ loc_txt = {
   name = 'Jumper',
   text = {
     "When a card is scored this Joker gives {C:mult}+#1#{} Mult",
-    "{C:inactive}Amount of given Mult scales with each played card (8 -> 16 and so on...)",
+    "{C:inactive}Amount of given Mult scales with each played card (4 -> 8 and so on...)",
     "{C:inactive,s:0.75}Wait, are you telling me the card DOESN'T have to score?{}"
   }
 },
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult } }
 end,
-config = { extra = { mult = 8 } },
-rarity = 'gj_hrdr',
+config = { extra = { mult = 4 } },
+rarity = 3,
 unlocked = true,
 mainlevel = true,
 firstrelease = true,
@@ -776,7 +756,7 @@ config = {
     triggered = false -- for tracking per-round trigger
   }
 },
-rarity = 'gj_hrdr',
+rarity = 2,
 unlocked = true,
 mainlevel = true,
 broken = 1,
@@ -833,7 +813,7 @@ loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult } }
 end,
 config = { extra = { mult = 1 } },
-rarity = 'gj_hrdr',
+rarity = 2,
 unlocked = true,
 mainlevel = true,
 blueprint_compat = true,
@@ -861,7 +841,7 @@ loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
 end,
 config = { extra = { repetitions = 6, odds = 6 } },
-rarity = 'gj_ins',
+rarity = 3,
 unlocked = true,
 mainlevel = true,
 latestrelease = true,
@@ -905,7 +885,7 @@ loc_txt = {
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_mult, card.ability.extra.Emult_mod } }
 end,
-config = { extra = { e_mult = 1, Emult_mod = 0.25 } },
+config = { extra = { e_mult = 1, Emult_mod = 0.125 } },
 rarity = 'gj_uniq',
 unlocked = true,
 blueprint_compat = true,
@@ -915,7 +895,7 @@ soul_pos = { x = 1, y = 0 },
 cost = 26,
 friend = 1,
 calculate = function(self, card, context)
-  if context.using_consumeable and context.consumeable.ability.set == "Planet" then
+  if context.using_consumeable and context.consumeable.ability.set == "Planet" and not context.blueprint then
   card.ability.extra.e_mult = card.ability.extra.e_mult + card.ability.extra.Emult_mod
 end
  if context.joker_main then
@@ -976,9 +956,9 @@ loc_txt = {
   name = "FireIce",
   text = {
     "{C:mult}No Effect.{}",
-    "{C:inactive}Intended Effect: {X:dark,C:white}+1{} {X:chips,C:white}Chips{X:mult,C:white}Mult{C:inactive} operator",
+    "{C:inactive}Intended Effect: {X:dark,C:white}???{}",
     "{C:inactive}Released to facilitate Boss Blind.",
-    "{C:purple,E:1,s:0.6}Something bad will happen on (or past) {C:dark_edition,s:0.6}Ante 39{}"
+    "{C:purple,E:1,s:0.6}Something bad will happen on (or past) {C:dark_edition,s:0.6}Ante 16{}"
   }
 },
 loc_vars = function(self, info_queue, card)
@@ -1002,15 +982,14 @@ loc_txt = {
   name = "{C:red}Unstable Vessel",
   text = {
     "{C:purple,s:3}You don't want to know.{}",
-    "{X:dark_edition,C:white,E:1,s:0.7}^^^#1#{C:inactive,s:0.7} Chips and Mult",
+    "{X:purple,C:white,E:1,s:0.7}sqrt(x){C:inactive,s:0.7} Chips and Mult",
     "{X:attention,C:white,E:1,s:0.7}^#2#{C:inactive,s:0.7} Blind Requirement",
-    "{C:inactive,s:0.5}Intended Change: [Joker]6 Blind Requirement"
   }
 },
 loc_vars = function(self, info_queue, card)
-  return { vars = { card.ability.extra.eee_chips, card.ability.extra.e_blind } }
+  return { vars = { card.ability.extra.e_chips, card.ability.extra.e_blind } }
 end,
-config = { extra = { eee_chips = 0.1, e_blind = 4.21 } },
+config = { extra = { e_chips = 0.5, e_blind = 1.5 } },
 rarity = 'gj_detri',
 unlocked = true,
 blueprint_compat = true,
@@ -1037,8 +1016,8 @@ calculate = function(self, card, context)
             end
             if context.joker_main then
               return {
-                eee_chips = card.ability.extra.eee_chips,
-                eee_mult = card.ability.extra.eee_chips
+                e_chips = card.ability.extra.e_chips,
+                e_mult = card.ability.extra.e_chips
               }
             end
         end
@@ -1049,8 +1028,8 @@ key = 'aralin',
 loc_txt = {
   name = "Aralin",
   text = {
-    "Gain {X:chips,C:white}^#1#{} Chips, based on Jokers",
-    "{C:inactive}(Currently {X:chips,C:white}^#2#{C:inactive} Chips)",
+    "Gain {X:chips,C:white}X#1#{} Chips, based on Jokers",
+    "{C:inactive}(Currently {X:chips,C:white}X#2#{C:inactive} Chips)",
     "{C:inactive,s:0.7}Double Gain if you have Pry Stellar",
     "{C:inactive}where me {}{E:1,X:money,C:white}w{E:1,X:red,C:white}if{E:1,X:purple,C:white}e{}",
     "{C:inactive}OC by: Volcanic_M1st {}",
@@ -1073,7 +1052,7 @@ friend = 1,
 calculate = function(self, card, context)
 if context.joker_main then
   return {
-  e_chips = card.ability.extra.e_chips * (#G.jokers.cards * (next(SMODS.find_card("j_gj_pr")) and 2 or 1))
+  x_chips = card.ability.extra.e_chips * (#G.jokers.cards * (next(SMODS.find_card("j_gj_pr")) and 2 or 1))
   }
 end
 end
@@ -1133,7 +1112,7 @@ end,
 SMODS.Blind {
 key = 'nouniques',
 loc_txt = {
-  name = "An Oddity (WIP)",
+  name = "An Oddity",
   text = {
     "Destroy all 'Unique' Jokers (e_mult was too strong :sob:)",
     "(Blind cannot be countered in any way, shape or form)",
