@@ -285,9 +285,9 @@ loc_txt = {
   }
 },
 loc_vars = function(self, info_queue, card)
-  return { vars = { card.ability.extra.perma_mult } }
+  return { vars = { card.ability.extra.mult } }
 end,
-config = { extra = { perma_mult = 5 } },
+config = { extra = { mult = 8 } },
 rarity = 'gj_hrdr',
 unlocked = true,
 mainlevel = true,

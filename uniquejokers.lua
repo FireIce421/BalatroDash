@@ -86,7 +86,7 @@ key = 'fireicerealjokerlol',
 loc_txt = {
   name = "FireIce",
   text = {
-    "{X:dark,C:white}+1{} {X:chips,C:white}Chips{X:mult,C:white}Mult{C:inactive} operator",
+    "{X:chips,C:white}Chips{X:mult,C:white}Mult{} is set to {X:purple,C:white}^",
     "{C:inactive}Released to facilitate Boss Blind.",
     "{C:purple,E:1,s:0.6}Something bad will happen on (or past) {C:dark_edition,s:0.6}Ante 16{}"
   }
@@ -221,6 +221,9 @@ soul_pos = { x = 1, y = 5 },
 cost = -1,
 eternal = 1,
 friend = 1,
+set_ability = function(self, card, initial)
+  card:set_eternal(true)
+end,
 calculate = function(self, card, context)
   if context.joker_main then
     return {
@@ -242,8 +245,8 @@ key = 'felix',
 loc_txt = {
   name = "Felix Josiah",
   text = {
-      "Create two{C:spectral} Spectral{C:inactive} Cards when a Blind is defeated.",
-      "Create an additional {C:dark_edition}Negative {C:spectral}Spectral {C:inactive}when a {C:attention}Boss Blind{C:inactive} is defeated."
+      "Create two{C:spectral} Spectral{} Cards when a Blind is defeated.",
+      "Create an additional {C:dark_edition}Negative {C:spectral}Spectral {}when a {C:attention}Boss Blind{} is defeated."
   }
 },
 loc_vars = function(self, info_queue, card)
