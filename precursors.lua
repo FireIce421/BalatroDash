@@ -1,15 +1,5 @@
 SMODS.Joker {
 key = 'flower',
-loc_txt = {
-  name = "Ominous Flower",
-  text = {
-      "{C:purple}I will create a Joker for you, but:",
-      "{C:mult,E:1,s:1.25}You must defeat a Boss Blind.{}",
-      "",
-      "'                  .'",
-      "{C:inactive,s:0.8}This joker will not survive."
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_chips, card.ability.extra.e_chips * (G.jokers and #G.jokers.cards or 0) } }
 end,
@@ -23,6 +13,7 @@ pos = { x = 0, y = 0 },
 soul_pos = { x = 0, y = 1 },
 cost = 26,
 friend = 1,
+eternal_compat = false,
 calculate = function(self, card, context)
         if context.end_of_round and context.main_eval and G.GAME.blind.boss  then
             return {

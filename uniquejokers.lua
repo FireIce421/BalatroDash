@@ -1,17 +1,7 @@
+local is_in_shop = G.STATE == G.STATES.SHOP
+
 SMODS.Joker {
 key = 'pr',
-loc_txt = {
-  name = "{s:0.75}(Asteria){} Pry Stellar!",
-  text = {
-    "When a {C:planet}Planet{} card is used, gain {X:mult,C:white}^#2#{} Mult",
-    "{C:inactive}(Currently {X:mult,C:white}^#1#{C:inactive} Mult)",
-    "{C:inactive,s:0.7}Double Gain if you have Aralin",
-    "{C:inactive}Oh,,,, hai!!! heiii!!!! hii!!!!!!!{}",
-    "{C:inactive}OC by: KITTIIZZ_X3 {}",
-    "{C:inactive,s:0.8}Face Art by: {X:dark_edition,C:white,s:0.8}gudusername_53951",
-    "{C:inactive,s:0.8}Background by: {X:purple,C:white,s:0.8}Slipstream",
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_mult, card.ability.extra.Emult_mod } }
 end,
@@ -37,20 +27,6 @@ end
 }
 SMODS.Joker {
 key = 'dlo',
-loc_txt = {
-  name = "DlovanSlayer",
-  text = {
-    "For every used {X:spectral,C:white}Spectral{} or {X:tarot,C:white}Tarot{} card, add {X:mult,C:white}x#3#{} Mult and {X:chips,C:white}x#4#{} Chips",
-    "{X:chips,C:white}XChips{} will be applied {C:mult}first{}, then {X:mult,C:white}XMult{}",
-    "{C:inactive}Hello there!{}",
-    "{C:inactive}OC by: DlovanSl {}",
-    "{s:0.5}Note: {X:spectral,C:white}Spectrals{} will add {X:mult,C:white}XMult{} and {X:tarot,C:white}Tarots{} will add {X:chips,C:white}XChips{}{}",
-    "",
-    "As a drawback, {X:chips,C:white}XChips{} and {X:mult,C:white}XMult{} will be {X:dark,C:white}divided{} by #5#.",
-    "Increase the {X:dark,C:white}division{} denominator by #6# at the end of each round", -- if you dont solve this, it will be your downfall
-    "Currently: {X:mult,C:white}x#1#{}, {X:chips,C:white}x#2#{},{X:dark,C:white}/#5#(+#6#){}",
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.x_mult, card.ability.extra.x_chips, card.ability.extra.x_multGain, card.ability.extra.x_chipsGain, card.ability.extra.divExp, card.ability.extra.divGain } }
 end,
@@ -83,14 +59,6 @@ end
 }
   SMODS.Joker {
 key = 'fireicerealjokerlol',
-loc_txt = {
-  name = "FireIce",
-  text = {
-    "{X:chips,C:white}Chips{X:mult,C:white}Mult{} is set to {X:purple,C:white}^",
-    "{C:inactive}Released to facilitate Boss Blind.",
-    "{C:purple,E:1,s:0.6}Something bad will happen on (or past) {C:dark_edition,s:0.6}Ante 16{}"
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_chips, card.ability.extra.e_chipsGain } }
 end,
@@ -105,27 +73,18 @@ cost = 26,
 thecaticon = 1,
 
   add_to_deck = function(self, card, from_debuff)
-      SMODS.set_scoring_calculation('exponent')
+      change_operator(1)
   end,
   remove_from_deck = function(self, card, from_debuff)
-      SMODS.set_scoring_calculation('multiply')
+      change_operator(-1)
   end
 }
 SMODS.Joker {
 key = 'vessel',
-loc_txt = {
-  name = "{C:red}Unstable Vessel",
-  text = {
-    "{C:purple,s:3}You don't want to know.{}",
-    "{X:dark_edition,C:white,E:1,s:0.7}^^^#1#{C:inactive,s:0.7} Chips and Mult",
-    "{X:attention,C:white,E:1,s:0.7}^#2#{C:inactive,s:0.7} Blind Requirement",
-    "{C:red,E:2,s:0.8}Certain mods will have additional effects on this joker.",
-    "{E:1,C:purple,s:0.8}Something is still holding it together..."  }
-},
 loc_vars = function(self, info_queue, card)
-  return { vars = { card.ability.extra.eee_chips, card.ability.extra.e_blind } }
+  return { vars = { card.ability.extra.e_chips, card.ability.extra.e_blind } }
 end,
-config = { extra = { eee_chips = 0.1, e_blind = 4.21 } },
+config = { extra = { e_chips = 0.5, e_blind = 1.5 } },
 rarity = 'gj_detri',
 unlocked = true,
 blueprint_compat = true,
@@ -133,7 +92,7 @@ eternal = 1,
 atlas = 'uniq',
 pos = { x = 0, y = 3 },
 soul_pos = { x = 1, y = 3 },
-cost = -1,
+cost = -999,
 set_ability = function(self, card, initial)
   card:set_eternal(true)
 end,
@@ -148,35 +107,49 @@ calculate = function(self, card, context)
                     G.HUD_blind:recalculate()
                     chips_UI:juice_up()
 
-                    if not silent then play_sound('chips2') end
+                    play_sound('chips2')
                 return true end }))
             end
             if context.joker_main then
               return {
-                eee_chips = card.ability.extra.eee_chips,
-                eee_mult = card.ability.extra.eee_chips
+                e_chips = card.ability.extra.e_chips,
+                e_mult = card.ability.extra.e_chips
               }
             end
-            if context.end_of_round then
-              SMODS.destroy_cards(SMODS.find_card("j_gj_vessel"), true, false, false)
-            end
+            if context.starting_shop  then
+                        return {
+                            func = function()
+                                local target_joker = card
+                                
+                                if target_joker then
+                                    if target_joker.ability.eternal then
+                                        target_joker.ability.eternal = nil
+                                    end
+                                  end
+                                return true
+                            end
+                        }
+                    end
+        if context.ending_shop  then
+          card:set_eternal(true)
         end
+          end,
+  remove_from_deck = function(self, card, from_debuff)
+      G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.5,
+        func = function()
+          G.SHOP_SIGN:remove()
+          G.SHOP_SIGN = nil
+          return true
+        end
+      }))
+      bdash_event_bonus_new_round("bl_gj_truevessel", 0)
+  end
 }
 
 SMODS.Joker {
 key = 'aralin',
-loc_txt = {
-  name = "Aralin",
-  text = {
-    "Gain {X:chips,C:white}^#1#{} Chips, based on Jokers",
-    "{C:inactive}(Currently {X:chips,C:white}^#2#{C:inactive} Chips)",
-    "{C:inactive,s:0.7}Double Gain if you have Pry Stellar",
-    "{C:inactive}where me {}{E:1,X:money,C:white}w{E:1,X:red,C:white}if{E:1,X:purple,C:white}e{}",
-    "{C:inactive}OC by: Volcanic_M1st {}",
-    "{C:inactive,s:0.8}Face Art by: {X:dark_edition,C:white,s:0.8}gudusername_53951",
-    "{C:inactive,s:0.8}Background by: {X:purple,C:white,s:0.8}FireIce",
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_chips, card.ability.extra.e_chips * (G.jokers and #G.jokers.cards or 0) } }
 end,
@@ -200,14 +173,6 @@ end
 
 SMODS.Joker {
 key = 'gudDetri',
-loc_txt = {
-  name = "Gud",
-  text = {
-    "{X:dark,C:white}/(Ante*Round){} Chips and Mult",
-    "{C:inactive}Currently: {X:dark,C:white}/#1#{}",
-    "{C:inactive,s:0.8}Updates when Blind is Selected{}"
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.cur_denom, card.ability.extra.x_chips, card.ability.extra.x_mult } }
 end,
@@ -242,13 +207,6 @@ end,
 
 SMODS.Joker {
 key = 'felix',
-loc_txt = {
-  name = "Felix Josiah",
-  text = {
-      "Create two{C:spectral} Spectral{} Cards when a Blind is defeated.",
-      "Create an additional {C:dark_edition}Negative {C:spectral}Spectral {}when a {C:attention}Boss Blind{} is defeated."
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_chips, card.ability.extra.e_chips * (G.jokers and #G.jokers.cards or 0) } }
 end,

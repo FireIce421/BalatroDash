@@ -1,13 +1,5 @@
 SMODS.Joker {
   key = 'stereom',
-
-  loc_txt = {
-    name = 'Stereo Madness',
-    text = {
-      "{C:mult}+#1#{} Mult for every Card",
-      "{C:inactive}(Card must Score){}"
-    }
-  },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.mult } }
   end,
@@ -34,13 +26,6 @@ end
 
 SMODS.Joker {
  key = 'backont',
- loc_txt = {
-   name = 'Back on Track',
-   text = {
-     "{C:chips}+#1#{} Chips for every Face Card",
-     "{C:inactive}(Card must Score){}"
-   }
- },
  loc_vars = function(self, info_queue, card)
    return { vars = { card.ability.extra.chips } }
  end,
@@ -64,13 +49,6 @@ end
 
 SMODS.Joker {
 key = 'polar',
-loc_txt = {
- name = 'Polargeist',
- text = {
-   "Retrigger each non-Face Card once.",
-   "{C:inactive}Wait, isn't that just reverse Sock and Busk- CARD MUST SCORE.{}"
- }
-},
  loc_vars = function(self, info_queue, card)
    return { vars = { card.ability.extra.repetitions } }
  end,
@@ -97,15 +75,6 @@ calculate = function(self, card, context)
 }
 SMODS.Joker {
 key = 'dryout',
-loc_txt = {
-  name = 'Dry Out',
-  text = {
-    'For each round without selling anything, gain {C:mult}+#1#{} Mult, otherwise {C:attention}reset{}',
-    '{C:inactive}Activates an additional time per scored card',
-    '{C:inactive}(Currently: {C:mult}+#2#{}{C:inactive}){}',
-    '{C:inactive}please let me rest i dont want to buff this more'
-    }
-},
 loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.mult_mod, card.ability.extra.mult } }
 end,
@@ -143,13 +112,6 @@ end,
 
 SMODS.Joker {
 key = 'base',
-loc_txt = {
-  name = 'Base After Base',
-  text = {
-    "{X:chips,C:white}+X0.1{} Chips per scored card",
-    "{C:inactive}Starts at X1"
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.x_chips } }
 end,
@@ -177,14 +139,6 @@ end
 
 SMODS.Joker {
 key = 'clg',
-loc_txt = {
-  name = 'Cant Let Go',
-  text = {
-    "Destroy Joker to the Left",
-    "Gain 6.25% of its sell value as {X:mult,C:white}XMult{}",
-    "{C:inactive}Currently: {X:mult,C:white}X#1#{C:inactive} Mult"
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult } }
 end,
@@ -242,13 +196,6 @@ end
 }
 SMODS.Joker {
 key = 'ultimate',
-loc_txt = {
-  name = 'Ultimate Destruction',
-  text = {
-      "{C:chips}+#2# Chips{}, compounding.",
-      "{C:mult}+#1# Mult{}, compounding."
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult, card.ability.extra.chips } }
 end,
@@ -276,14 +223,6 @@ end
 }
 SMODS.Joker {
 key = 'jmp',
-loc_txt = {
-  name = 'Jumper',
-  text = {
-    "When a card is scored this Joker gives {C:mult}+#1#{} Mult",
-    "{C:inactive}Amount of given Mult scales with each played card (8 -> 16 and so on...)",
-    "{C:inactive,s:0.75}Wait, are you telling me the card DOESN'T have to score?{}"
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult } }
 end,
@@ -310,14 +249,6 @@ end
 }
 SMODS.Joker {
 key = 'tmach',
-loc_txt = {
-  name = 'Time Machine',
-  text = {
-    "Each {C:dark_edition}scored{} card gains",
-    "{C:mult}+#1#{} Bonus Mult",
-    "{C:inactive,s:0.75}Stacks{}"
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.perma_mult } }
 end,
@@ -325,7 +256,6 @@ config = { extra = { perma_mult = 5 } },
 rarity = 'gj_hrdr',
 unlocked = true,
 mainlevel = true,
-broken = 1,
 secondrelease = true,
 blueprint_compat = true,
 atlas = 'jokerList',
@@ -342,14 +272,6 @@ calculate = function(self, card, context)
 }
 SMODS.Joker {
   key = 'cycl',
-  loc_txt = {
-    name = 'Cycles',
-    text = {
-      "{C:attention}+#1#{} Hand Size",
-      "+1 additonal Hand Size when a Blind is defeated",
-      "Resets at the start of Each Ante"
-    }
-  },
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.handsize } }
 end,
@@ -363,45 +285,41 @@ pos = { x = 1, y = 1 },
 cost = 12,
 onepointtwo = 1,
 calculate = function(self, card, context)
+        if context.ante_change  then
+            return {
+                extra = {
+                    
+                    func = function()
+                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Reset!", colour = G.C.WHITE})
+                        
+                        local target_hand_size = 8
+                        local difference = target_hand_size - (G.hand.config.card_limit or 0)
+                        G.hand:change_size(difference)
+                        return true
+                    end,
+                }
+            }
+        end
         if context.setting_blind  then
             return {
                 
                 func = function()
-                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil)
+                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "+Hand Size!", colour = G.C.BLUE})
                     
                     G.hand:change_size(card.ability.extra.handsize)
                     return true
                 end
             }
         end
-        if context.ante_change  then
+        if context.end_of_round and context.game_over == false and context.main_eval  then
             return {
-                
-                func = function()
-                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil)
-                    
-                    local current_hand_size = (G.hand.config.card_limit or 0)
-                    local target_hand_size = 8
-                    local difference = target_hand_size - current_hand_size
-                    G.hand:change_size(difference)
-                    return true
-                end
+                message = "Upgraded!"
             }
         end
     end
 }
 SMODS.Joker {
 key = 'dash',
-loc_txt = {
-  name = 'Dash',
-  text = {
-    "{C:green}#2# in #3#{} chance to retrigger each {C:attention}6{} 6 times.",
-    "{C:inactive}So, I've heard you like the number {C:green}6{C:inactive}.{}",
-    " ",
-    "{C:inactive}Code inspired from: {C:chips}POLTERWORX{}",
-    "{s:0.5,C:chips}The Sigil{s:0.5} is gone, but the{s:0.5,C:green} memory{s:0.5} remains.{}"
-  }
-},
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
 end,
