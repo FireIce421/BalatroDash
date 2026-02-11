@@ -233,7 +233,7 @@ mainlevel = true,
 firstrelease = true,
 blueprint_compat = true,
 atlas = 'jokerList',
-pos = { x = 1, y = 1 },
+pos = { x = 2, y = 1 },
 cost = 10,
 calculate = function(self, card, context)
   if context.cardarea == G.play and context.individual then
@@ -259,7 +259,7 @@ mainlevel = true,
 secondrelease = true,
 blueprint_compat = true,
 atlas = 'jokerList',
-pos = { x = 2, y = 1 },
+pos = { x = 3, y = 1 },
 cost = 12,
 calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play  then
@@ -281,7 +281,7 @@ unlocked = true,
 mainlevel = true,
 blueprint_compat = true,
 atlas = 'jokerList',
-pos = { x = 1, y = 1 },
+pos = { x = 4, y = 1 },
 cost = 12,
 onepointtwo = 1,
 calculate = function(self, card, context)
@@ -330,7 +330,7 @@ mainlevel = true,
 latestrelease = true,
 blueprint_compat = false,
 atlas = 'jokerList',
-pos = { x = 2, y = 1 },
+pos = { x = 2, y = 4 },
 cost = 24,
 calculate = function(self, card, context)
   if pseudorandom('dash') < G.GAME.probabilities.normal / card.ability.extra.odds then

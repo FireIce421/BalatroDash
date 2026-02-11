@@ -2,7 +2,7 @@ SMODS.Atlas {
   -- Key for code to find it with
   key = "jokerList",
   -- The name of the file, for the code to pull the atlas from
-  path = "GJ_jokerList.png",
+  path = "GJ_jokerListNEW.png",
   -- Width of each sprite in 1x size
   px = 69,
   -- Height of each sprite in 1x size

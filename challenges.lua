@@ -1,8 +1,5 @@
 SMODS.Challenge {
     key = 'levelOne',
-    loc_txt = {
-        name = "Not So Gud"
-    },
     jokers = {
         { id = 'j_gj_gudDetri', edition = 'negative', eternal = true },
     },
@@ -10,9 +7,6 @@ SMODS.Challenge {
 }
 SMODS.Challenge {
     key = 'levelTwo',
-    loc_txt = {
-        name = "Stellarity"
-    },
     jokers = {
         { id = 'j_gj_flower', edition = 'negative' },
         { id = "j_astronomer", eternal = true},
@@ -25,3 +19,13 @@ SMODS.Challenge {
     },
     button_colour = HEX('450061')
 }
+if next(SMODS.find_mod("ocstobalatro")) then
+SMODS.Challenge {
+    key = 'levelEX1',
+    jokers = {
+        { id = 'j_ocstobal_reclusivevessel',eternal = true },
+        { id = "j_gj_vessel", edition = 'negative', eternal = true},
+    },
+    button_colour = HEX('000000')
+}
+end

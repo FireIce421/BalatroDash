@@ -1,125 +1,151 @@
 return {
-	["misc"] = {
-		["quips"] = {
-			["gj_pry1"] = {
+	misc = {
+		quips = {
+			gj_pry1 = {
 				"can you lock the fuck in",
 			},
-			["gj_fireice3"] = {
+			gj_fireice3 = {
 				"look at this player",
 				"they lost a balatro run so hard",
 				"even their gang clowned them",
 			},
-			["gj_fireice2"] = {
+			gj_fireice2 = {
 				"{E:1,C:dark_edition,s:2}skill issue",
 			},
-			["gj_fireice1"] = {
+			gj_fireice1 = {
 				"Did you forget,",
 				"that {C:dark_edition,E:1}cards must score{}?",
 			},
-			["gj_vessel1"] = {
+			gj_vessel1 = {
 				"TRY AGAIN",
 				"{E:1,C:red}IF YOU DARE",
 			},
 		},
-		["challenge_names"] = {
-			["c_gj_levelTwo"] = "Stellarity",
-			["c_gj_levelOne"] = "Not So Gud",
+		challenge_names = {
+			c_gj_levelTwo = "Stellarity",
+			c_gj_levelOne = "Not So Gud",
+			c_gj_levelEX1 = "Duo Vascellum",
 		},
-		["dictionary"] = {
-			["k_gj_detri"] = "Detriment",
-			["k_gj_hrdr"] = "Harder",
-			["k_gj_ins"] = "Insane",
-			["k_gj_norm"] = "Normal",
-			["k_gj_uniq"] = "Unique",
-			["k_gj_ez"] = "Easy",
-			["k_gj_hr"] = "Hard",
-			["k_gj_na"] = "NA",
-			["k_gj_hrdm"] = "Hard Demon",
+		dictionary = {
+			k_gj_detri = "Detriment",
+			k_gj_hrdr = "Harder",
+			k_gj_ins = "Insane",
+			k_gj_norm = "Normal",
+			k_gj_uniq = "Unique",
+			k_gj_ez = "Easy",
+			k_gj_hr = "Hard",
+			k_gj_na = "NA",
+			k_gj_hrdm = "Hard Demon",
+
+
+
+			--// quotes //--
 		},
-		["labels"] = {
-			["k_gj_ez"] = "Easy",
-			["k_gj_hr"] = "Hard",
-			["k_gj_ins"] = "Insane",
-			["k_gj_hrdm"] = "Hard Demon",
-			["k_gj_hrdr"] = "Harder",
-			["k_gj_norm"] = "Normal",
-			["k_gj_uniq"] = "Unique",
-			["k_gj_na"] = "NA",
-			["k_gj_detri"] = "Detriment",
+		labels = {
+			k_gj_ez = "Easy",
+			k_gj_hr = "Hard",
+			k_gj_ins = "Insane",
+			k_gj_hrdm = "Hard Demon",
+			k_gj_hrdr = "Harder",
+			k_gj_norm = "Normal",
+			k_gj_uniq = "Unique",
+			k_gj_na = "NA",
+			k_gj_detri = "Detriment",
 		},
 	},
-	["descriptions"] = {
-		["Blind"] = {
-			["bl_gj_unstable"] = {
-				["name"] = "Vesselic Vanity",
-				["text"] = {
+	descriptions = {
+		Blind = {
+			bl_gj_unstable = {
+				name = "Vesselic Vanity",
+				text = {
 					"A terrible stench emanates from the blind...",
 					"(Blind cannot be countered in any way, shape or form)",
 					"Brutal Blind Size",
 				},
 			},
-			["bl_wheel"] = {
-				["text"] = {
-					"#1# in #2# cards get",
-				},
-			},
-			["bl_gj_nouniques"] = {
-				["name"] = "An Oddity",
-				["text"] = {
+			bl_gj_nouniques = {
+				name = "An Oddity",
+				text = {
 					"Destroy all 'Unique' Jokers (e_mult was too strong :sob:)",
 					"(Blind cannot be countered in any way, shape or form)",
 					"Extreme Blind Size",
 				},
 			},
-			["bl_gj_truevessel"] = {
-				["name"] = "Unstable Vessel",
-				["text"] = {
-					"So you tried getting rid of me",
-					"WEAK.",
+			bl_gj_truevessel = {
+				name = "Unstable Vessel",
+				text = {
+					"CINEMA Blind Size",
 				},
 			},
 		},
-		["Joker"] = {
-			["j_gj_challengeExtender1"] = {
-				["name"] = "Challenge Extender",
-				["text"] = {
+		Other = {
+			bdash_credits = {
+				text = {
+					"{E:2,C:dark_edition}Name (Discord Tag){}",
+					"{E:1,C:purple,s:2}Project Lead{}",
+					"{C:white,s:1.5}FireIce (@fireice_421){}",
+					"{C:white,s:1.5}Gud (@gudusername_53951){}",
+					" ",
+					"{E:1,C:purple,s:2}Artist{}",
+					"{C:white,s:1.5}Gud (@gudusername_53951){}",
+					"{C:white,s:1.5}Feli (@LasagnaFelidae){}",
+					"{C:white,s:1.5}Bombler (@spoo077_05268){}",
+					"{C:white,s:1.5}Slipstream (@thingifithinker){}",
+					" ",
+					"{E:1,C:purple,s:2}Programmer{}",
+					"{C:white,s:1.5}FireIce (@fireice_421){}",
+					"{C:white,s:1.5}dragokillfist (@dragokillfist){}",
+					" ",
+					" ",
+					"{E:1,C:purple,s:2}Inspiration{}",
+					"{E:1,C:blue,s:2}POLTERWORX{}",
+					"main inspiration for the mod",
+					"{E:1,C:green,s:2}Geometry Dash{}",
+					"thank you robtop for such peak game :)"
+				}
+			}
+		},
+		Joker = {
+			j_gj_challengeExtender1 = {
+				name = "Challenge Extender",
+				text = {
 					"Sets Winning Ante to 16",
 					"{C:inactive,s:0.9}Does not appear in the collection",
 				},
 			},
-			["j_gj_tmach"] = {
-				["name"] = "Time Machine",
-				["text"] = {
+			j_gj_tmach = {
+				name = "Time Machine",
+				text = {
 					"Each {C:dark_edition}scored{} card gains",
 					"{C:mult}+#1#{} Bonus Mult",
 					"{C:inactive,s:0.75}Stacks{}",
 				},
 			},
-			["j_gj_base"] = {
-				["name"] = "Base After Base",
-				["text"] = {
+			j_gj_base = {
+				name = "Base After Base",
+				text = {
 					"{X:chips,C:white}+X0.25{} Chips per scored card",
 					"{C:inactive}Starts at X1",
 				},
 			},
-			["j_gj_jmp"] = {
-				["name"] = "Jumper",
-				["text"] = {
+			j_gj_jmp = {
+				name = "Jumper",
+				text = {
 					"When a card is scored this Joker gives {C:mult}+#1#{} Mult",
 					"{C:inactive}Amount of given Mult scales with each played card (8 -> 16 and so on...)",
 					"{C:inactive,s:0.75}Wait, are you telling me the card DOESN'T have to score?{}",
 				},
 			},
-			["j_gj_felix"] = {
-				["name"] = "Felix Josiah",
-				["text"] = {
+			j_gj_felix = {
+				name = "Felix Josiah",
+				text = {
 					"Create two{C:spectral} Spectral{} Cards when a Blind is defeated.",
 					"Create an additional {C:dark_edition}Negative {C:spectral}Spectral {}when a {C:attention}Boss Blind{} is defeated.",
 				},
 			},
-			["j_gj_vessel"] = {
-				["name"] = "{C:red}Unstable Vessel",
-				["text"] = {
+			j_gj_vessel = {
+				name = "{C:red}Unstable Vessel",
+				text = {
 					{
 					"{C:purple,s:3}You don't want to know.{}",
 					},{
@@ -131,9 +157,9 @@ return {
 					}
 				},
 			},
-			["j_gj_aralin"] = {
-				["name"] = "Aralin",
-				["text"] = {
+			j_gj_aralin = {
+				name = "Aralin",
+				text = {
 					{
 					"Gain {X:chips,C:white}^#1#{} Chips, based on Jokers",
 					"{C:inactive}(Currently {X:chips,C:white}^#2#{C:inactive} Chips)",
@@ -145,9 +171,9 @@ return {
 					}
 				},
 			},
-			["j_gj_dlo"] = {
-				["name"] = "DlovanSlayer",
-				["text"] = {
+			j_gj_dlo = {
+				name = "DlovanSlayer",
+				text = {
 					{
 					"When a {C:spectral}Spectral {}is used, gain {X:mult,C:white}X#3#{} Mult",
 					"When a {C:tarot}Tarot {}is used, gain {X:chips,C:white}X#4#{} Chips",
@@ -156,31 +182,31 @@ return {
 					}
 				},
 			},
-			["j_gj_cycl"] = {
-				["name"] = "Cycles",
-				["text"] = {
+			j_gj_cycl = {
+				name = "Cycles",
+				text = {
 					"{C:attention}+#1#{} Hand Size",
 					"+1 additonal Hand Size when a Blind is defeated",
 					"Resets at the start of Each Ante",
 				},
 			},
-			["j_gj_clg"] = {
-				["name"] = "Cant Let Go",
-				["text"] = {
+			j_gj_clg = {
+				name = "Cant Let Go",
+				text = {
 					"Destroy Joker to the Left",
 					"Gain 6.25% of its sell value as {X:mult,C:white}XMult{}",
 					"{C:inactive}Currently: {X:mult,C:white}X#1#{C:inactive} Mult",
 				},
 			},
-			["j_gj_stereom"] = {
-				["name"] = "Stereo Madness",
-				["text"] = {
+			j_gj_stereom = {
+				name = "Stereo Madness",
+				text = {
 					"{C:mult}+#1#{} Mult for every {C:dark_edition}scored{} Card"
 				},
 			},
-			["j_gj_flower"] = {
-				["name"] = "Ominous Flower",
-				["text"] = {
+			j_gj_flower = {
+				name = "Ominous Flower",
+				text = {
 					"{C:purple}I will create a Joker for you, but:",
 					"{C:mult,E:1,s:1.25}You must defeat a Boss Blind.{}",
 					"",
@@ -188,9 +214,9 @@ return {
 					"{C:inactive,s:0.8}This joker will not survive.",
 				},
 			},
-			["j_gj_dryout"] = {
-				["name"] = "Dry Out",
-				["text"] = {
+			j_gj_dryout = {
+				name = "Dry Out",
+				text = {
 					{
 					"For each round without selling anything, gain {C:mult}+#1#{} Mult, otherwise {C:attention}reset{}",
 					"{C:inactive}(Currently: {C:mult}+#2#{}{C:inactive}){}",
@@ -199,9 +225,9 @@ return {
 					}
 				},
 			},
-			["j_gj_ultimate"] = {
-				["name"] = "Ultimate Destruction",
-				["text"] = {
+			j_gj_ultimate = {
+				name = "Ultimate Destruction",
+				text = {
 					{
 					"{C:chips}+#2# Chips{}, compounding.",
 					},{
@@ -209,9 +235,9 @@ return {
 					}
 				},
 			},
-			["j_gj_pr"] = {
-				["name"] = "{s:0.75}(Asteria){} Pry Stellar!",
-				["text"] = {
+			j_gj_pr = {
+				name = "{s:0.75}(Asteria){} Pry Stellar!",
+				text = {
 					"When a {C:planet}Planet{} card is used, gain {X:mult,C:white}^#2#{} Mult",
 					"{C:inactive}(Currently {X:mult,C:white}^#1#{C:inactive} Mult)",
 					"{C:inactive,s:0.7}Double Gain if you have Aralin",
@@ -221,9 +247,9 @@ return {
 					"{C:inactive,s:0.8}Background by: {X:purple,C:white,s:0.8}Slipstream",
 				},
 			},
-			["j_gj_fireicerealjokerlol"] = {
-				["name"] = "FireIce",
-				["text"] = { {
+			j_gj_fireicerealjokerlol = {
+				name = "FireIce",
+				text = { {
 					"{C:purple}+1 {}operator to {X:chips,C:white}Chips{X:mult,C:white}Mult",
 					"{C:purple,E:1,s:0.6}Something bad will happen on (or past) {C:dark_edition,s:0.6}Ante 16{}",
 					},{
@@ -231,34 +257,49 @@ return {
 					}
 				},
 			},
-			["j_gj_backont"] = {
-				["name"] = "Back on Track",
-				["text"] = {
+			j_gj_backont = {
+				name = "Back on Track",
+				text = {
 					"{C:chips}+#1#{} Chips for every {C:dark_edition}scored{} Face Card"
 				},
 			},
-			["j_gj_polar"] = {
-				["name"] = "Polargeist",
-				["text"] = {
+			j_gj_polar = {
+				name = "Polargeist",
+				text = {
 					"Retrigger each non-Face Card once.",
 					"{C:inactive}Wait, isn't that just reverse Sock and Busk- CARD MUST SCORE.{}",
 				},
 			},
-			["j_gj_gudDetri"] = {
-				["name"] = "Chester (Gud)",
-				["text"] = {
+			j_gj_gudDetri = {
+				name = "Chester (Gud)",
+				text = {
 					"{X:dark,C:white}/(Ante*Round){} Chips and Mult",
 					"{C:inactive}Currently: {X:dark,C:white}/#1#{}",
 					"{C:inactive,s:0.8}Updates when Blind is Selected{}",
 				},
 			},
-			["j_gj_dash"] = {
-				["name"] = "Dash",
-				["text"] = {
+			j_gj_dash = {
+				name = "Dash",
+				text = {
 					"{C:green}#2# in #3#{} chance to retrigger each {C:attention}6{} 6 times.",
 					"{C:inactive}So, I've heard you like the number {C:green}6{C:inactive}.{}",
 					" ",
 					"{s:0.5,C:chips}The Sigil{s:0.5} is gone, but the{s:0.5,C:green} memory{s:0.5} remains.{}",
+				},
+			},
+			j_gj_fireiceabsurd = {
+				name = "FireIces' Absurd Joke",
+				text = {
+					"Instantly create {C:purple}UNSTABLE VESSEL{}",
+					" ",
+					"{C:NIGHTMARE_PURPLE}FIREICE YOU BLEW UP A GALAXY- (-Seraph)",
+					"{C:NIGHTMARE_PURPLE}Vessel did it! (-FireIce)",
+				},
+			},
+			j_gj_fireice = {
+				name = "FireIce",
+				text = {
+					"{E:1,s:1.2,C:red}The more mods you have installed, the more effects this joker has!{}"
 				},
 			},
 		},

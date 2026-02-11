@@ -12,5 +12,7 @@ SMODS.load_file("uniquejokers.lua")()
 SMODS.load_file("blinds.lua")()
 SMODS.load_file("challenges.lua")()
 SMODS.load_file("misc.lua")()
+SMODS.load_file("otherjokers.lua")()
+SMODS.load_file("fireicejokerforrealnow.lua")()
 
 -- sorry all the code was vacated to their respective files

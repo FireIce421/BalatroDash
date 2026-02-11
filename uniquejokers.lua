@@ -116,20 +116,11 @@ calculate = function(self, card, context)
                 e_mult = card.ability.extra.e_chips
               }
             end
-            if context.starting_shop  then
-                        return {
-                            func = function()
-                                local target_joker = card
-                                
-                                if target_joker then
-                                    if target_joker.ability.eternal then
-                                        target_joker.ability.eternal = nil
-                                    end
-                                  end
-                                return true
-                            end
-                        }
-                    end
+            if context.starting_shop then
+              if G.GAME.challenge ~= "c_gj_levelEX1" then
+              card:set_eternal(false)
+              end
+            end
         if context.ending_shop  then
           card:set_eternal(true)
         end

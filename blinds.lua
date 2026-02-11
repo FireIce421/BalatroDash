@@ -71,13 +71,12 @@ key = 'truevessel',
 loc_txt = {
   name = "Unstable Vessel",
   text = {
-    "So you tried getting rid of me",
-    "WEAK."
+    "CINEMA Blind Size",
   }
 },
-dollars = 10,
-mult = 1.7e308,
-boss = {min = 16, max = 10 },
+dollars = 0,
+mult = 65535,
+boss = {min = 421, max = 10 },
 boss_colour = HEX("450061"),
 atlas = 'uniq',
 pos = { x = 1, y = 3 },
@@ -96,7 +95,10 @@ calculate = function(self, blind, context)
     end
   end
    if context.setting_blind then
-
+    G.GAME.fightBack = true
+  end
+  if context.blind_defeated then
+    G.GAME.fightBack = false
   end
 end,
 }

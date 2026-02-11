@@ -2,18 +2,18 @@
 	"id": "bdash",
 	"name": "Balatro Dash",
 	"display_name": "Geometry Dash",
-	"author": ["FireIce", "gudusername_53951"],
+	"author": ["FireIce", "Gud"],
 	"description": "Adds a whole lot of things based on Geometry Dash Levels and Icons!",
 	"prefix": "gj",
 	"main_file": "primary.lua",
 	"priority": 421,
 	"badge_colour": "00CC00",
 	"badge_text_colour": "FFFFFF",
-	"version": "0.0.2a",
+	"version": "0.0.3a",
 	"no_marquee": "true",
 	"dependencies": [
 		"Steamodded (>=1.0.0~BETA-0827c)",
-		"Talisman | cdataman | Cryptlib"
+		"Amulet | Cryptlib"
 	],
 	"dump_loc": false
 }

@@ -148,6 +148,18 @@ SMODS.Sound {
     path = "snd_laugh1.ogg"
 }
 
+SMODS.Sound {
+    key = "music421421421421421421421",
+    path = "spiralout.mp3",
+    pitch = 1,
+    volume = 3,
+    select_music_track = function()
+        if G.GAME then
+            if G.GAME.fightBack == true then return true else return false end
+        end
+    end
+}
+
 -- other things
 
 function bdash_event_bonus_new_round(blind_key, extra_config)
