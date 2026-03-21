@@ -15,12 +15,30 @@ SMODS.JimboQuip({
 	end
 end
 })
+SMODS.JimboQuip({
+	key = 'vessel2',
+	type = 'loss',
+    extra = {
+        center = 'j_gj_vessel',
+        particle_colours = {
+            HEX('450061'),
+            HEX('FFFFFF'),
+            G.C.DARK_EDITION
+        }
+    },
+    filter = function(self, type)
+	if next(SMODS.find_card('j_gj_vessel')) then
+		return true, {weight = 1000}
+	end
+end
+})
 
 
 SMODS.JimboQuip({
 	key = 'pry1',
-	type = 'loss',ra = {
-        center = 'j_gj_pr',
+	type = 'loss',
+    extra = {
+        center = 'j_gj_prystellar',
         particle_colours = {
             G.C.YELLOW,
             HEX('FF0000'),
@@ -28,7 +46,7 @@ SMODS.JimboQuip({
         }
     },
     filter = function(self, type)
-	if next(SMODS.find_card('j_gj_pr')) then
+	if next(SMODS.find_card('j_gj_prystellar')) then
 		return true, {weight = 1000}
 	end
 end
@@ -149,13 +167,24 @@ SMODS.Sound {
 }
 
 SMODS.Sound {
-    key = "music421421421421421421421",
+    key = "musicVessel1",
     path = "spiralout.mp3",
     pitch = 1,
-    volume = 3,
+    volume = 1,
     select_music_track = function()
         if G.GAME then
             if G.GAME.fightBack == true then return true else return false end
+        end
+    end
+}
+SMODS.Sound {
+    key = "musicVessel2",
+    path = "spiralcalm.mp3",
+    pitch = 1,
+    volume = 1,
+    select_music_track = function()
+        if G.GAME then
+            if G.GAME.restock == true then return true else return false end
         end
     end
 }
@@ -219,3 +248,21 @@ function bdash_event_bonus_new_round(blind_key, extra_config)
         end
     }))
 end
+
+SMODS.PokerHand {
+    key = "fullflush",
+    mult = 15,
+    chips = 150,
+    l_mult = 5,
+    l_chips = 80,
+    example = {
+        { 'S_K', true },
+        { 'S_K', true },
+        { 'H_K', true },
+        { 'H_K', true },
+        { 'H_K', true },
+    },
+    visible = false,
+    evaluate = function(parts, hand)
+    end
+}

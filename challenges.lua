@@ -19,6 +19,19 @@ SMODS.Challenge {
     },
     button_colour = HEX('450061')
 }
+SMODS.Challenge {
+    key = 'levelThree',
+    jokers = {
+        { id = 'j_gj_vessel', edition = 'negative', eternal = true },
+        { id = 'j_gj_fireicerealjokerlol', edition = 'foil', eternal = true },
+    },
+    restrictions = {
+        banned_cards = {
+            { id = 'j_ring_master' },
+        }
+    },
+    button_colour = HEX('450061')
+}
 if next(SMODS.find_mod("ocstobalatro")) then
 SMODS.Challenge {
     key = 'levelEX1',

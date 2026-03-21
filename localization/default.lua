@@ -20,10 +20,20 @@ return {
 				"TRY AGAIN",
 				"{E:1,C:red}IF YOU DARE",
 			},
+			gj_vessel2 = {
+				"Another one flies too close to the sun."
+			},
+			gj_vessel3 = {
+				"Another one flies too close to the waters."
+			},
+			gj_vesselunused = {
+				"..."
+			},
 		},
 		challenge_names = {
-			c_gj_levelTwo = "Stellarity",
 			c_gj_levelOne = "Not So Gud",
+			c_gj_levelTwo = "Stellarity",
+			c_gj_levelThree = "Vesselic Vanity",
 			c_gj_levelEX1 = "Duo Vascellum",
 		},
 		dictionary = {
@@ -36,10 +46,25 @@ return {
 			k_gj_hr = "Hard",
 			k_gj_na = "NA",
 			k_gj_hrdm = "Hard Demon",
+			k_gj_spec = "Special",
+			k_gj_unbound = "Unbound",
 
 
 
 			--// quotes //--
+		},
+		poker_hand_descriptions = {
+			gj_fullflush = {
+				"Two cards of one Suit, Three cards of another.",
+				"Rank must be the same across both suits",
+				"(Blame: MurphyObv)",
+				"",
+				"oh yeah you cant level up this hand cuz i hate you balatro",
+				"NOT IMPLEMENTED"
+			}
+		},
+		poker_hands = {
+			gj_fullflush = "Full Flush"
 		},
 		labels = {
 			k_gj_ez = "Easy",
@@ -51,6 +76,8 @@ return {
 			k_gj_uniq = "Unique",
 			k_gj_na = "NA",
 			k_gj_detri = "Detriment",
+			k_gj_spec = "Special",
+			k_gj_unbound = "Unbound",
 		},
 	},
 	descriptions = {
@@ -101,7 +128,9 @@ return {
 					"{E:1,C:blue,s:2}POLTERWORX{}",
 					"main inspiration for the mod",
 					"{E:1,C:green,s:2}Geometry Dash{}",
-					"thank you robtop for such peak game :)"
+					"thank you robtop for such peak game :)",
+					"{E:1,C:red,s:2}Heaven Pierce Her{}",
+					"Spiral Out (Keep Going) is used as a placeholder for Unstable Vessel, hope you dont mind"
 				}
 			}
 		},
@@ -235,7 +264,13 @@ return {
 					}
 				},
 			},
-			j_gj_pr = {
+			j_gj_xstep = {
+				name = "xStep",
+				text = {
+					"Effect varies on currently {C:dark_edition}scored{} Enhancement"
+				},
+			},
+			j_gj_prystellar = {
 				name = "{s:0.75}(Asteria){} Pry Stellar!",
 				text = {
 					"When a {C:planet}Planet{} card is used, gain {X:mult,C:white}^#2#{} Mult",
@@ -299,7 +334,8 @@ return {
 			j_gj_fireice = {
 				name = "FireIce",
 				text = {
-					"{E:1,s:1.2,C:red}The more mods you have installed, the more effects this joker has!{}"
+					"{E:1,s:1.2,C:red}The more mods you have installed, the more effects this joker has!{}",
+					"CURRENTLY HALF-BAKED, DO NOT PICK UP"
 				},
 			},
 		},
