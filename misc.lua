@@ -189,6 +189,16 @@ SMODS.Sound {
     end
 }
 
+SMODS.Sound({
+		key = "music_menuLoop",
+		path = "menuLoop.mp3",
+		volume = 1,
+		pitch = 1,
+		select_music_track = function()
+			return G.STAGE == G.STAGES.MAIN_MENU and math.huge
+		end,
+	})
+
 -- other things
 
 function bdash_event_bonus_new_round(blind_key, extra_config)
