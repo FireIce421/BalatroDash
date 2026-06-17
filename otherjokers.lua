@@ -1,61 +1,46 @@
-if SMODS.find_mod("ocstobalatro") then
-    SMODS.Joker {
-  key = 'fireiceabsurd',
-  loc_vars = function(self, info_queue, card)
-    return { vars = {  } }
-  end,
-  config = { extra = {  } },
-  rarity = 1,
-  unlocked = true,
-  blueprint_compat = false,
-  pos = { x = 0, y = 0 },
-  cost = 4,
-  calculate = function(self, card, context)
-if context.buying_card and context.card.config.center.key == self.key and context.cardarea == G.jokers  then
+SMODS.Joker {
+    key = 'lazy',
+    rarity = 1,
+    cost = 4,
+    atlas = 'gj_miscJokers',
+    unlocked = true,
+    blueprint_compat = true,
+    pos = {x = 0, y = 0},
+    config = { extra = { s_mult = 3, suit = 'gj_icons' }, },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = { card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular') }
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and
+            context.other_card:is_suit(card.ability.extra.suit) then
             return {
-                func = function()
-                    
-                    local created_joker = true
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            local joker_card = SMODS.add_card({ set = 'Joker', key = 'j_gj_vessel' })
-                            if joker_card then
-                                
-                                
-                            end
-                            
-                            return true
-                        end
-                    }))
-                    
-                    if created_joker then
-                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
-                    end
-                    return true
-                end,
-                extra = {
-                    func = function()
-                        local target_joker = card
-                        
-                        if target_joker then
-                            if target_joker.ability.eternal then
-                                target_joker.ability.eternal = nil
-                            end
-                            target_joker.getting_sliced = true
-                            G.E_MANAGER:add_event(Event({
-                                func = function()
-                                    target_joker:explode({G.C.RED}, nil, 1.6)
-                                    return true
-                                end
-                            }))
-                            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Destroyed!", colour = G.C.RED})
-                        end
-                        return true
-                    end,
-                    colour = G.C.RED
-                }
+                mult = card.ability.extra.s_mult
             }
         end
-end
+    end
 }
-end
+ SMODS.Joker {
+    key = 'malachite',
+    rarity = 2,
+    cost = 6,
+    atlas = 'gj_miscJokers',
+    unlocked = true,
+    blueprint_compat = true,
+    pos = {x = 1, y = 0},
+    config = { extra = { odds = 3, s_xchips = 2, suit = 'gj_icons' }, },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = { card.ability.extra.odds, card.ability.extra.s_xchips, localize(card.ability.extra.suit, 'suits_singular') }
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) and
+            SMODS.pseudorandom_probability(card, 'bdash_malachite', 1, card.ability.extra.odds) then
+                return {
+                    x_chips = card.ability.extra.s_xchips
+                }
+        end
+    end
+}

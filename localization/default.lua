@@ -1,5 +1,11 @@
 return {
 	misc = {
+		suits_singular = {
+			gj_icons = "Icon"
+		},
+		suits_plural = {
+			gj_icons = "Icons"
+		},
 		quips = {
 			gj_pry1 = {
 				"can you lock the fuck in",
@@ -48,23 +54,11 @@ return {
 			k_gj_hrdm = "Hard Demon",
 			k_gj_spec = "Special",
 			k_gj_unbound = "Unbound",
+			b_gj_lap2="...again?",
+			k_gj_lap2="LAP 2",
 
 
 
-			--// quotes //--
-		},
-		poker_hand_descriptions = {
-			gj_fullflush = {
-				"Two cards of one Suit, Three cards of another.",
-				"Rank must be the same across both suits",
-				"(Blame: MurphyObv)",
-				"",
-				"oh yeah you cant level up this hand cuz i hate you balatro",
-				"NOT IMPLEMENTED"
-			}
-		},
-		poker_hands = {
-			gj_fullflush = "Full Flush"
 		},
 		labels = {
 			k_gj_ez = "Easy",
@@ -82,16 +76,23 @@ return {
 	},
 	descriptions = {
 		Blind = {
-			bl_gj_unstable = {
-				name = "Vesselic Vanity",
+			bl_gj_vesselicvanityphaseone = {
+				name = "Vesselic Vanity (Phase I)",
 				text = {
-					"A terrible stench emanates from the blind...",
+					"{s:2,C:red}...{}",
 					"(Blind cannot be countered in any way, shape or form)",
 					"Brutal Blind Size",
 				},
 			},
-			bl_gj_nouniques = {
-				name = "An Oddity",
+			bl_gj_vesselicvanityphasetwo = {
+				name = "Vesselic Vanity (Phase II)",
+				text = {
+					"{s:2,C:red}...{}",
+					"Currently not implemented!"
+				},
+			},
+			bl_gj_oddballoddity = {
+				name = "Oddball Oddity",
 				text = {
 					"Destroy all 'Unique' Jokers (e_mult was too strong :sob:)",
 					"(Blind cannot be countered in any way, shape or form)",
@@ -104,24 +105,33 @@ return {
 					"CINEMA Blind Size",
 				},
 			},
+			bl_gj_skewer = {
+				name = "The Skewer",
+				text = {
+					"All Icon cards are debuffed"
+				},
+			},
 		},
 		Other = {
 			bdash_credits = {
 				text = {
 					"{E:2,C:dark_edition}Name (Discord Tag){}",
 					"{E:1,C:purple,s:2}Project Lead{}",
-					"{C:white,s:1.5}FireIce (@fireice_421){}",
-					"{C:white,s:1.5}Gud (@gudusername_53951){}",
+					"{C:white,s:0.9}FireIce (@fireice_421){}",
+					"{C:white,s:0.9}Gup (@i.am.the.gud){}",
 					" ",
 					"{E:1,C:purple,s:2}Artist{}",
-					"{C:white,s:1.5}Gud (@gudusername_53951){}",
-					"{C:white,s:1.5}Feli (@LasagnaFelidae){}",
-					"{C:white,s:1.5}Bombler (@spoo077_05268){}",
-					"{C:white,s:1.5}Slipstream (@thingifithinker){}",
+					"{C:white,s:0.9}Gup (@i.am.the.gud){}",
+					"{C:white,s:0.9}Feli (@LasagnaFelidae){}",
+					"{C:white,s:0.9}Bombler (@spoo077_05268){}",
+					"{C:white,s:0.9}Slipstream (@thingifithinker){}",
+					"{C:white,s:0.9}Lyman (@spikeberd09){}",
+					"{C:white,s:0.9}Pixel (@pixeldavel){}",
 					" ",
 					"{E:1,C:purple,s:2}Programmer{}",
-					"{C:white,s:1.5}FireIce (@fireice_421){}",
-					"{C:white,s:1.5}dragokillfist (@dragokillfist){}",
+					"{C:white,s:0.9}FireIce (@fireice_421){}",
+					"{C:white,s:0.9}dragokillfist (@dragokillfist){}",
+					"{C:white,s:0.9}Pixel (@pixeldavel){}",
 					" ",
 					" ",
 					"{E:1,C:purple,s:2}Inspiration{}",
@@ -129,8 +139,6 @@ return {
 					"main inspiration for the mod",
 					"{E:1,C:green,s:2}Geometry Dash{}",
 					"thank you robtop for such peak game :)",
-					"{E:1,C:red,s:2}Heaven Pierce Her{}",
-					"Spiral Out (Keep Going) is used as a placeholder for Unstable Vessel, hope you dont mind"
 				}
 			}
 		},
@@ -139,6 +147,13 @@ return {
 				name = "Challenge Extender",
 				text = {
 					"Sets Winning Ante to 16",
+					"{C:inactive,s:0.9}Does not appear in the collection",
+				},
+			},
+			j_gj_vesselweakened = {
+				name = "Unstable Vessel (Weakened)",
+				text = {
+					"{X:attention,C:white}^#1#{} Blind Requirement",
 					"{C:inactive,s:0.9}Does not appear in the collection",
 				},
 			},
@@ -187,15 +202,15 @@ return {
 				},
 			},
 			j_gj_aralin = {
-				name = "Aralin",
+				name = "Aralin (Chione) Moonlight",
 				text = {
 					{
 					"Gain {X:chips,C:white}^#1#{} Chips, based on Jokers",
 					"{C:inactive}(Currently {X:chips,C:white}^#2#{C:inactive} Chips)",
-					"{C:inactive,s:0.7}Double Gain if you have Pry Stellar",
+					"{C:inactive,s:0.7}X1.25 if you have Pry Stellar",
 					},{
-					"{C:inactive}OC by: Volcanic_Mist {}",
-					"{C:inactive,s:0.8}Face Art by: {X:dark_edition,C:white,s:0.8}gudusername_53951",
+					"{C:inactive}OC by: VolcanicMist {}",
+					"{C:inactive,s:0.8}Face Art by: {X:dark_edition,C:white,s:0.8}i.am.the.gud",
 					"{C:inactive,s:0.8}Background by: {X:purple,C:white,s:0.8}FireIce",
 					}
 				},
@@ -211,18 +226,39 @@ return {
 					}
 				},
 			},
+			j_gj_lazy = {
+				name = "Slothful Joker",
+				text = {
+						"Played cards with",
+                    	"the {C:gj_icons}#2#{} suit give",
+                    	"{C:mult}+#1#{} Mult when scored",
+						"{s:0.9,C:inactive}joker so lazy it forgot the joker text on its sprite"
+				},
+			},
+			j_gj_malachite = {
+				name = "Malachite Cluster",
+				text = {
+						"{C:green}1 in #1#{} chance for played cards",
+                    	"with the {C:gj_icons}#3#{} suit to give",
+                    	"{X:chips,C:white}X#2#{} Chips when scored"
+				},
+			},
 			j_gj_cycl = {
 				name = "Cycles",
 				text = {
+					{
 					"{C:attention}+#1#{} Hand Size",
 					"+1 additonal Hand Size when a Blind is defeated",
-					"Resets at the start of Each Ante",
+					"Hand Size is set to {C:attention}8{} on ante change",
+					},{
+					"WARNING: Effects of Hand Size-affecting items will be nullified!"
+					}
 				},
 			},
 			j_gj_clg = {
-				name = "Cant Let Go",
+				name = "Can't Let Go",
 				text = {
-					"Destroy Joker to the Left",
+					"Destroy Joker to the Left when Blind is Selected",
 					"Gain 6.25% of its sell value as {X:mult,C:white}XMult{}",
 					"{C:inactive}Currently: {X:mult,C:white}X#1#{C:inactive} Mult",
 				},
@@ -236,11 +272,17 @@ return {
 			j_gj_flower = {
 				name = "Ominous Flower",
 				text = {
+					{
 					"{C:purple}I will create a Joker for you, but:",
 					"{C:mult,E:1,s:1.25}You must defeat a Boss Blind.{}",
 					"",
-					"'                  .'",
+					"'{C:white}Yes, I know I am overpriced. Shut up{}.'",
+					"Does nothing otherwise.",
 					"{C:inactive,s:0.8}This joker will not survive.",
+					},{
+						"{C:purple,E:1}What it does: Create a random Special Joker when a Boss Blind is defeated{}",
+						"{s:0.8,C:inactive}(Must have room)",
+					}
 				},
 			},
 			j_gj_dryout = {
@@ -267,7 +309,12 @@ return {
 			j_gj_xstep = {
 				name = "xStep",
 				text = {
-					"Effect varies on currently {C:dark_edition}scored{} Enhancement"
+					{
+					"{C:attention}Played{} or {C:attention}held in hand{} {C:dark_edition}Enhancements{} have additional effects.",
+					"{C:inactive,s:0.8}Experiment! Each Enhancement has a unique effect tied to it!"
+					},{
+						"{s:0.9,C:inactive}Only Vanilla and {s:0.9,C:gj_icons}Balatro Dash{s:0.9,C:inactive} Enhancements are taken into account"
+					}
 				},
 			},
 			j_gj_prystellar = {
@@ -275,10 +322,10 @@ return {
 				text = {
 					"When a {C:planet}Planet{} card is used, gain {X:mult,C:white}^#2#{} Mult",
 					"{C:inactive}(Currently {X:mult,C:white}^#1#{C:inactive} Mult)",
-					"{C:inactive,s:0.7}Double Gain if you have Aralin",
+					"{C:inactive,s:0.7}X1.5 if you have Aralin",
 					"{C:inactive}Oh,,,, hai!!! heiii!!!! hii!!!!!!!{}",
 					"{C:inactive}OC by: KITTIIZZ_X3 {}",
-					"{C:inactive,s:0.8}Face Art by: {X:dark_edition,C:white,s:0.8}gudusername_53951",
+					"{C:inactive,s:0.8}Face Art by: {X:dark_edition,C:white,s:0.8}i.am.the.gud",
 					"{C:inactive,s:0.8}Background by: {X:purple,C:white,s:0.8}Slipstream",
 				},
 			},
@@ -338,6 +385,16 @@ return {
 					"CURRENTLY HALF-BAKED, DO NOT PICK UP"
 				},
 			},
+		},
+		Tarot = {
+			c_gj_controller = {
+				name = "The Controller",
+                text = {
+                    "Converts up to",
+                    "{C:attention}#1#{} selected cards",
+                    "to {V:1}#2#{}",
+				}
+			}
 		},
 	},
 }

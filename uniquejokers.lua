@@ -1,12 +1,12 @@
 local is_in_shop = G.STATE == G.STATES.SHOP
 
 SMODS.Joker {
-key = 'pr',
+key = 'prystellar',
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_mult, card.ability.extra.Emult_mod } }
 end,
 config = { extra = { e_mult = 1, Emult_mod = 0.25 } },
-rarity = 'gj_uniq',
+rarity = 'gj_spec',
 unlocked = true,
 blueprint_compat = true,
 atlas = 'uniq',
@@ -20,7 +20,7 @@ calculate = function(self, card, context)
 end
  if context.joker_main then
     return {
-      e_mult = card.ability.extra.e_mult * (next(SMODS.find_card("j_gj_aralin")) and 2 or 1)
+      e_mult = card.ability.extra.e_mult * (next(SMODS.find_card("j_gj_aralin")) and 1.5 or 1)
     }
   end
 end
@@ -31,7 +31,7 @@ loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.x_mult, card.ability.extra.x_chips, card.ability.extra.x_multGain, card.ability.extra.x_chipsGain, card.ability.extra.divExp, card.ability.extra.divGain } }
 end,
 config = { extra = { x_mult = 1, x_chips = 1, x_multGain = 1, x_chipsGain = 0.5, divExp = 1, divGain = 0.05 } },
-rarity = 'gj_uniq',
+rarity = 'gj_spec',
 unlocked = true,
 blueprint_compat = true,
 atlas = 'uniq',
@@ -57,26 +57,45 @@ if context.end_of_round and context.cardarea == G.jokers then
 end
 end
 }
-  SMODS.Joker {
+SMODS.Joker {
 key = 'fireicerealjokerlol',
 loc_vars = function(self, info_queue, card)
-  return { vars = { card.ability.extra.e_chips, card.ability.extra.e_chipsGain } }
+  return { vars = { card.ability.extra.operatorChange } }
 end,
-config = { extra = { e_chips = 1, e_chipsGain = 1 } },
-rarity = 'gj_uniq',
+config = { extra = { operatorChange = 1 } },
+rarity = 'gj_unbound',
 unlocked = true,
-blueprint_compat = true,
+blueprint_compat = false,
 atlas = 'uniq',
 pos = { x = 0, y = 2 },
 soul_pos = { x = 1, y = 2 },
 cost = 26,
 thecaticon = 1,
+debuff_immune = true,
+immutable = true,
+immune_to_vermillion = true,
+no_mysterious = true,
+unique = true,
+
+calculate = function(self, card, context)
+    if context.setting_blind and card.ability.extra.operatorChange ~= 1 then
+      card.ability.extra.operatorChange = 1
+    end
+end,
 
   add_to_deck = function(self, card, from_debuff)
-      change_operator(1)
+    if next(SMODS.find_mod("jen")) then
+      offset_final_operator(card.ability.extra.operatorChange)
+    else
+      change_operator(card.ability.extra.operatorChange)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-      change_operator(-1)
+    if next(SMODS.find_mod("jen")) then
+      offset_final_operator(-card.ability.extra.operatorChange)
+    else
+      change_operator(-card.ability.extra.operatorChange)
+    end
   end
 }
 SMODS.Joker {
@@ -92,7 +111,13 @@ eternal = 1,
 atlas = 'uniq',
 pos = { x = 0, y = 3 },
 soul_pos = { x = 1, y = 3 },
-cost = -999,
+cost = 999,
+debuff_immune = true,
+permanent = true,
+immutable = true,
+immune_to_vermillion = true,
+no_mysterious = true,
+unique = true,
 set_ability = function(self, card, initial)
   card:set_eternal(true)
 end,
@@ -117,7 +142,7 @@ calculate = function(self, card, context)
               }
             end
             if context.starting_shop then
-              if G.GAME.challenge ~= "c_gj_levelEX1" then
+              if G.GAME.challenge ~= "c_gj_levelEX1" and G.GAME.challenge ~= "c_gj_levelThree" then
               card:set_eternal(false)
               end
             end
@@ -132,11 +157,105 @@ calculate = function(self, card, context)
         func = function()
           G.SHOP_SIGN:remove()
           G.SHOP_SIGN = nil
+          G.GAME.restock = false
           return true
         end
       }))
       bdash_event_bonus_new_round("bl_gj_truevessel", 0)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.restock = true
   end
+}
+SMODS.Joker {
+key = 'vesselweakened',
+loc_vars = function(self, info_queue, card)
+  return { vars = { card.ability.extra.e_blind } }
+end,
+config = { extra = {e_blind = 1.25 } },
+rarity = 'gj_detri',
+unlocked = true,
+blueprint_compat = true,
+eternal = 1,
+atlas = 'uniq',
+pos = { x = 0, y = 3 },
+soul_pos = { x = 1, y = 3 },
+cost = 999,
+debuff_immune = true,
+permanent = true,
+immutable = true,
+immune_to_vermillion = true,
+no_collection = true,
+no_mysterious = true,
+unique = true,
+set_ability = function(self, card, initial)
+  card:set_eternal(true)
+end,
+calculate = function(self, card, context)
+  if context.setting_blind and not card.getting_sliced and not context.blueprint then
+                G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
+                    G.GAME.blind.chips = math.floor(G.GAME.blind.chips ^ card.ability.extra.e_blind)
+                    G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+
+                    local chips_UI = G.hand_text_area.blind_chips
+                    G.FUNCS.blind_chip_UI_scale(G.hand_text_area.blind_chips)
+                    G.HUD_blind:recalculate()
+                    chips_UI:juice_up()
+
+                    play_sound('chips2')
+                return true end }))
+              end
+              if G.GAME.won == true and G.GAME.nowdoitalloveragain == true then
+                G.GAME.nowdoitalloveragain = false
+                return {
+                func = function()
+                    
+                    local created_joker = false
+                    if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
+                        created_joker = true
+                        G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                local joker_card = SMODS.add_card({ set = 'Joker', rarity = 'gj_unbound', key_append = 'balatrodash' })
+                                if joker_card then
+                                    
+                                    
+                                end
+                                G.GAME.joker_buffer = 0
+                                return true
+                            end
+                        }))
+                    end
+                    if created_joker then
+                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
+                    end
+                    return true
+                end,
+                extra = {
+                    func = function()
+                        local target_joker = card
+                        
+                        if target_joker then
+                            target_joker.getting_sliced = true
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    target_joker:explode({G.C.PURPLE}, nil, 1.6)
+                                    return true
+                                end
+                            }))
+                            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Destroyed!", colour = G.C.RED})
+                        end
+                        return true
+                    end,
+                    colour = G.C.RED
+                }
+            }
+              end
+            end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.nowdoitalloveragain = true
+    G.GAME.won = false
+end
 }
 
 SMODS.Joker {
@@ -144,8 +263,8 @@ key = 'aralin',
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_chips, card.ability.extra.e_chips * (G.jokers and #G.jokers.cards or 0) } }
 end,
-config = { extra = { e_chips = 1 } },
-rarity = 'gj_uniq',
+config = { extra = { e_chips = 0.5 } },
+rarity = 'gj_spec',
 unlocked = true,
 blueprint_compat = true,
 atlas = 'uniq',
@@ -156,7 +275,7 @@ friend = 1,
 calculate = function(self, card, context)
 if context.joker_main then
   return {
-  e_chips = card.ability.extra.e_chips * (#G.jokers.cards * (next(SMODS.find_card("j_gj_pr")) and 2 or 1))
+  e_chips = card.ability.extra.e_chips * (#G.jokers.cards * (next(SMODS.find_card("j_gj_pr")) and 1.25 or 1))
   }
 end
 end
@@ -176,6 +295,7 @@ pos = { x = 0, y = 5 },
 soul_pos = { x = 1, y = 5 },
 cost = -1,
 eternal = 1,
+permanent = true,
 friend = 1,
 set_ability = function(self, card, initial)
   card:set_eternal(true)
@@ -202,7 +322,7 @@ loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.e_chips, card.ability.extra.e_chips * (G.jokers and #G.jokers.cards or 0) } }
 end,
 config = { extra = { e_chips = 1 } },
-rarity = 'gj_uniq',
+rarity = 'gj_spec',
 unlocked = true,
 blueprint_compat = true,
 atlas = 'uniq',
@@ -298,3 +418,15 @@ path = "modded_seal.png",
 px = 71,
 py = 95
 } ]]
+
+local oldcardsetsellvalue = Card.set_sell_value
+function Card:set_sell_value()
+    local g = oldcardsetsellvalue(self)
+    if self.config.center.key == 'j_gj_vessel' then
+        self.sell_cost = -10
+    end
+    if self.config.center.key == 'j_gj_vesselweakened' then
+        self.sell_cost = -math.huge
+    end
+    return g
+end

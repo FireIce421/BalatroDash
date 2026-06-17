@@ -1,0 +1,68 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS jen "Jen.lua"]'
+pattern = '''
+suit_leveling = {
+			Hearts = {
+				chips = .1,
+				mult = .5
+			},
+'''
+position = 'after'
+payload = '''
+gj_icons = {
+				chips = .3,
+				mult = .3
+			},
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS jen "Jen.lua"]'
+pattern = '''
+return suit == 'hearts' and 'red' or suit == 'spades' and 'blue' or suit == 'clubs' and 'green' or suit == 'diamonds' and 'yellow' or 'n/a'
+'''
+position = 'at'
+payload = '''
+return suit == 'hearts' and 'red' or suit == 'spades' and 'blue' or suit == 'clubs' and 'green' or suit == 'diamonds' and 'yellow' or suit == 'gj_icons' and 'lime' or 'n/a'
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS jen "Jen.lua"]'
+pattern = '''
+local uno_data = {
+	values = {
+		'2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'
+	},
+	colours = {
+		Red = 'Hearts',
+		Blue = 'Spades',
+		Green = 'Clubs',
+		Yellow = 'Diamonds'
+	}
+}
+'''
+position = 'at'
+payload = '''
+local uno_data = {
+	values = {
+		'2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'
+	},
+	colours = {
+		Red = 'Hearts',
+		Blue = 'Spades',
+		Green = 'Clubs',
+		Yellow = 'Diamonds',
+		Lime = 'gj_icons'
+	}
+}
+'''
+match_indent = true

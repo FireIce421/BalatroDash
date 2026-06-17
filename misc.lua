@@ -133,7 +133,7 @@ set_ability = function(self, card, initial)
                     }))
                     return true
                 end,
-                message = "Winner Ante set to " .. 16 .. "!",
+                message = "Ante Up!",
                 extra = {
                     func = function()
                         local target_joker = card
@@ -166,29 +166,6 @@ SMODS.Sound {
     path = "snd_laugh1.ogg"
 }
 
-SMODS.Sound {
-    key = "musicVessel1",
-    path = "spiralout.mp3",
-    pitch = 1,
-    volume = 1,
-    select_music_track = function()
-        if G.GAME then
-            if G.GAME.fightBack == true then return true else return false end
-        end
-    end
-}
-SMODS.Sound {
-    key = "musicVessel2",
-    path = "spiralcalm.mp3",
-    pitch = 1,
-    volume = 1,
-    select_music_track = function()
-        if G.GAME then
-            if G.GAME.restock == true then return true else return false end
-        end
-    end
-}
-
 SMODS.Sound({
 		key = "music_menuLoop",
 		path = "menuLoop.mp3",
@@ -199,7 +176,42 @@ SMODS.Sound({
 		end,
 	})
 
+SMODS.Sound({
+		key = "music_lap2",
+		path = "placeholderlap2theme.mp3",
+		volume = 1,
+		pitch = 1,
+		select_music_track = function()
+			if G.GAME then
+                if G.GAME.nowdoitalloveragain == true then return true else return false end
+            end
+		end,
+	})
+
 -- other things
+
+SMODS.Gradient {
+    key = "iconGradient",
+    colours = {
+        HEX('98F881'),
+        HEX('D5FF72')
+    },
+    cycle = 5,
+    interpolation = 'trig'
+}
+
+SMODS.Suit {
+    key = "icons",
+    card_key = "IC",
+    lc_atlas = 'suits_lc',
+    hc_atlas = 'suits_hc',
+    lc_ui_atlas = 'suitTime-low',
+    hc_ui_atlas = 'suitTime-high',
+    lc_colour = HEX('85A775'),
+    hc_colour = HEX('D5FF72'),
+    pos = { y = 0 },
+    ui_pos = { x = 0, y = 0 },
+}
 
 function bdash_event_bonus_new_round(blind_key, extra_config)
     G.RESET_JIGGLES = nil
@@ -258,21 +270,3 @@ function bdash_event_bonus_new_round(blind_key, extra_config)
         end
     }))
 end
-
-SMODS.PokerHand {
-    key = "fullflush",
-    mult = 15,
-    chips = 150,
-    l_mult = 5,
-    l_chips = 80,
-    example = {
-        { 'S_K', true },
-        { 'S_K', true },
-        { 'H_K', true },
-        { 'H_K', true },
-        { 'H_K', true },
-    },
-    visible = false,
-    evaluate = function(parts, hand)
-    end
-}

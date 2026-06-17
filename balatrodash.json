@@ -1,7 +1,7 @@
 {
 	"id": "bdash",
 	"name": "Balatro Dash",
-	"display_name": "Geometry Dash",
+	"display_name": "Balatro Dash",
 	"author": ["FireIce", "Gud"],
 	"description": "Adds a whole lot of things based on Geometry Dash Levels and Icons!",
 	"prefix": "gj",
@@ -9,12 +9,11 @@
 	"priority": 421,
 	"badge_colour": "00CC00",
 	"badge_text_colour": "FFFFFF",
-	"version": "0.0.2c",
+	"version": "0.0.3a",
 	"no_marquee": "true",
 	"dependencies": [
-		"Steamodded (>=1.0.0~BETA-0827c)",
+		"Steamodded (>=1.0.0~BETA-1620a)", 
 		"Amulet | Cryptlib"
 	],
 	"dump_loc": false
-
 }

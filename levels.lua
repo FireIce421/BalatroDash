@@ -319,6 +319,50 @@ calculate = function(self, card, context)
     end
 }
 SMODS.Joker {
+  key = 'xstep',
+loc_vars = function(self, info_queue, card)
+  return { vars = { card.ability.extra.x_chips1, card.ability.extra.x_chips2, card.ability.extra.x_mult, card.ability.extra.mult, card.ability.extra.dollars } }
+end,
+config = { extra = { x_chips1 = 1.75, x_chips2 = 2, x_mult = 1.5, mult = 5, dollars = 3 } },
+rarity = 'gj_ins',
+unlocked = true,
+mainlevel = true,
+blueprint_compat = true,
+atlas = 'jokerList',
+pos = { x = 0, y = 2 },
+cost = 16,
+onepointthree = 1,
+calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+          if SMODS.has_enhancement(context.other_card, 'm_steel') then
+            return {
+                x_mult = card.ability.extra.x_mult
+            }
+          end
+          if SMODS.has_enhancement(context.other_card, 'm_gold') then
+            return {
+                x_chips = card.ability.extra.x_chips1
+            }
+          end
+          if SMODS.has_enhancement(context.other_card, 'm_wild') then
+            return {
+                mult = card.ability.extra.mult
+            }
+          end
+            if SMODS.has_enhancement(context.other_card, 'm_stone') then
+            return {
+                dollars = card.ability.extra.dollars
+            }
+          end
+        end
+        if context.individual and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, 'm_glass') then
+            return {
+                x_chips = card.ability.extra.x_chips2
+            }
+         end -- mult and bonus cards dont do anything because i hate them
+end
+}
+SMODS.Joker {
 key = 'dash',
 loc_vars = function(self, info_queue, card)
   return { vars = { card.ability.extra.mult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }

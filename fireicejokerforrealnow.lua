@@ -96,7 +96,7 @@ loc_vars = function(self, info_queue, card)
     localize('k_gj_fireiceDialog' .. pseudorandom("seed", 1, 21)),
     card.ability.extra.operator } }
 end,
-config = { extra = { operator = 1 } },
+config = { extra = { operator = 2 } },
 rarity = 'gj_uniq',
 unlocked = true,
 blueprint_compat = true,
@@ -104,11 +104,20 @@ atlas = 'uniq',
 pos = { x = 0, y = 2 },
 cost = 26,
 thecaticon = 1,
+jen_debuff_immune = true,
 
   add_to_deck = function(self, card, from_debuff)
-      change_operator(card.ability.extra.operator)
+    if SMODS.find_mod("jen") then
+      set_final_operator(card.ability.extra.operator)
+    else
+      change_operator(1)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-      change_operator(card.ability.extra.operator)
+    if SMODS.find_mod("jen") then
+      change_operator(-1)
+    else
+      change_operator((card.ability.extra.operator*-1))
+    end
   end
 }

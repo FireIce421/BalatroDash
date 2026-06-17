@@ -5,9 +5,8 @@ loc_vars = function(self, info_queue, card)
 end,
 config = { extra = { e_chips = 1 } },
 rarity = 3,
-experimental = 1,
 unlocked = true,
-blueprint_compat = true,
+blueprint_compat = false,
 atlas = 'lookinside',
 pos = { x = 0, y = 0 },
 soul_pos = { x = 0, y = 1 },
@@ -25,7 +24,7 @@ calculate = function(self, card, context)
                         G.GAME.joker_buffer = G.GAME.joker_buffer + 1
                         G.E_MANAGER:add_event(Event({
                             func = function()
-                                local joker_card = SMODS.add_card({ set = 'Joker', key = 'j_gj_pr' })
+                                local joker_card = SMODS.add_card({ set = 'Joker', rarity = 'gj_spec', key_append = 'balatrodash' })
                                 if joker_card then
                                     
                                     
