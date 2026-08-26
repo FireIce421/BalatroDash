@@ -176,18 +176,6 @@ SMODS.Sound({
 		end,
 	})
 
-SMODS.Sound({
-		key = "music_lap2",
-		path = "placeholderlap2theme.mp3",
-		volume = 1,
-		pitch = 1,
-		select_music_track = function()
-			if G.GAME then
-                if G.GAME.nowdoitalloveragain == true then return true else return false end
-            end
-		end,
-	})
-
 -- other things
 
 SMODS.Gradient {
